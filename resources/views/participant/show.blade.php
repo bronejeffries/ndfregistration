@@ -1,8 +1,20 @@
 @extends('layouts.base')
 
 @section('content')
-
-<div class="row m-auto page-title">
+@guest
+<div class="row">
+        <div class="col-md-1 col-sm-1 col-xs-12 form-group pull-right">
+                <div class="input-group">
+                  <span class="input-group-btn">
+                      <a class="btn btn-primary text-white" href="{{ route('home') }}">
+                        <i class="fa fa-times" ></i>
+                        Close</a>
+                  </span>
+                </div>
+        </div>
+</div>
+@else
+<div class="row page-title">
         <div class="title_left">
           <h3>REGISTRATION FORM</h3>
         </div>
@@ -50,13 +62,12 @@
             </div>
           </div>
         {{-- </div> --}}
-
-
 </div>
+@endguest
 <div class="clearfix"></div>
 
-<div class="" id="info-mation">
-    <div class="print_out" >
+<div class="bg-light" id="info-mation">
+    <div class="print_out" id="print_out" >
         <div class="page-title row bg-light">
           <div class="col-md-3 col-sm-3 col-xs-3">
             <div class="title-left profile_pic pull-left">
@@ -79,15 +90,14 @@
 
         <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <div class="bg-image">
-                          <div class="x_content">
-                  <h2 class="text-center">EKISAAKAATE KYA NNABAGEREKA {{ $participant->ekn->description }} {{ $participant->ekn->year }}</h2>
-                      <h2 class="section text-center"> <strong> PARTICIPANT REGISTRATION FORM </strong></h2>
+                    <div class="bg-light">
+                         <h2 class="text-center">EKISAAKAATE KYA NNABAGEREKA {{ $participant->ekn->description }} {{ $participant->ekn->year }}</h2>
+                         <h2 class="section text-center"> <strong> PARTICIPANT REGISTRATION FORM </strong></h2>
                       <!-- Tabs -->
-                      <form class="form-label-left" >
-                          <div class="form_wizard wizard_verticle">
+                          <form class="form-label-left" >
+                               <div class="form_wizard wizard_verticle">
 
-                              <div class="row" >
+                                <div class="row" >
                                   <span class="section">
                                       <strong>
                                           1.PARTICIPANT'S INFORMATION
@@ -446,34 +456,23 @@
                                       </p>
                               </div>
 
-                          </div>
-                      </form>
+                            </div>
+                          </form>
                       <!-- End SmartWizard Content -->
                     </div>
-                  </div>
                 </div>
         </div>
 
     </div>
 </div>
 
-          <div class="row">
-              <table class="table" id="showparticipant">
-                  <thead>
-                      <tr>
-                          <th>
-                          </th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>
-                              Record {{ $participant->id }}
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
-
+<div class="row mr-3" style="overflow:hidden;">
+    <div class="col-md-1 col-sm-1 col-xs-12 form-group">
+        <a class="btn btn-success text-white" href="{{ route('pdf.participant',[$participant]) }}">
+                      Print to pdf
+                      <i class="fa fa-paste" ></i>
+                    </a>
+        </div>
+</div>
 
 @endsection

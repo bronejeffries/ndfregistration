@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="row m-auto page-title">
+
         {{-- <div class="title_right"> --}}
           <div class="col-md-1 col-sm-1 col-xs-12 form-group pull-right">
             <div class="input-group">
@@ -15,6 +16,15 @@
           </div>
         {{-- </div> --}}
 
+        <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right">
+                <div class="input-group">
+                  <span class="input-group-btn">
+                      <a class="btn btn-success text-white">
+                        <i class="fa fa-paste" ></i>
+                        Print to pdf</a>
+                  </span>
+                </div>
+        </div>
 
 </div>
 
@@ -79,24 +89,5 @@
 
     </div>
 </div>
-
-          <div class="row">
-              <table class="table" id="showparticipantTag">
-                  <thead>
-                      <tr>
-                          <th>
-                          </th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>
-                              Record {{ $participant->id }}
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
-
 
 @endsection

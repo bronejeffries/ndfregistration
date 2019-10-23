@@ -9,6 +9,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\ApiHelpers\OAuthConsumer;
+use App\Http\Controllers\ApiHelpers\OAuthDataStore;
+use App\Http\Controllers\ApiHelpers\OAuthException;
+use App\Http\Controllers\ApiHelpers\OAuthRequest;
+use App\Http\Controllers\ApiHelpers\OAuthServer;
+use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod;
+use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod_HMAC_SHA1;
+use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod_PLAINTEXT;
+use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod_RSA_SHA1;
+use App\Http\Controllers\ApiHelpers\OAuthToken;
+use App\Http\Controllers\ApiHelpers\OAuthUtil;
+use \PDF;
 
 class ParticipantController extends Controller
 {
@@ -97,7 +109,8 @@ class ParticipantController extends Controller
 
         $this->storeImage($newParticipant);
 
-        return redirect(route('participants.show',[$newParticipant]));
+        return $this->makeParticipantPayment($newParticipant->id);
+        // return redirect(route('participants.show',[$newParticipant]));
 
     }
 
@@ -112,6 +125,17 @@ class ParticipantController extends Controller
         //
         return view('participant.show',compact('participant'));
     }
+
+
+    public function generatePdf(Participant $participant)
+    {
+
+        $pdf = PDF::loadView('participant/pdfPrintView',compact('participant'));
+        return $pdf->stream("participant-".$participant->id.".pdf");
+
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -168,4 +192,62 @@ class ParticipantController extends Controller
             // $image->save();
         }
     }
-}
+
+    public function makeParticipantPayment($participant_id){
+
+            $token = $params = NULL;
+            $consumer_key = 'BLLEhnI/koKYAJ3PsJEgL3RcWRMrblU+';
+            $consumer_secret='wLz4ntDRAF8D0EMaRbykZjnmlfA=';
+            // $consumer_key = 'QJotK9ZtKoDTHyow6aAEHLwPUhQpa1jZ';
+            // $consumer_secret='k84uKG3iCbmnRr7FqUhQAfMKt1I=';
+            $signature_method = new OAuthSignatureMethod_HMAC_SHA1();
+            $iframelink = 'http://demo.pesapal.com/api/PostPesapalDirectOrderV4';
+
+            // $amount = $_POST['amount'];
+            $amount = "200";
+            $amount = number_format($amount, 2); //format amount to 2 decimal places
+            $desc = 'description';
+            $type = 'MERCHANT'; //default value = MERCHANT
+            $reference = $participant_id; //unique order id of the transaction, generated
+            $first_name = 'first_name'; //[optional]
+            $last_name = 'last_name'; //[optional]
+            $email = "bronej.jeffries2067@gmail.com";
+            //ONE of email or phonenumber is required
+            $Currency = "UGX";
+
+            $callback_url=route('payment.redirect');
+            $post_xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><PesapalDirectOrderInfo xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Amount=\"".$amount."\"  Description=\"".$desc."\" Type=\"".$type."\" Reference=\"".$reference."\" FirstName=\"".$first_name."\" LastName=\"".$last_name."\" Email=\"".$email."\"  xmlns=\"http://www.pesapal.com\"/>";
+            $post_xml = htmlentities($post_xml);
+
+            $consumer = new OAuthConsumer($consumer_key,$consumer_secret);
+
+            //post transaction to pesapal
+            $iframe_src = OAuthRequest::from_consumer_and_token($consumer, $token,"GET",$iframelink, $params);
+            $iframe_src->set_parameter("oauth_callback", $callback_url);
+            $iframe_src->set_parameter("pesapal_request_data", $post_xml);
+            $iframe_src->sign_request($signature_method, $consumer, $token);
+
+            return view('participant.paymentView',["iframe_data"=>$iframe_src]);
+		// return $iframe_src;
+            }
+
+            public function paymentRedirect(Request $request)
+            {
+
+                $payment_reference = $request->pesapal_merchant_reference;
+                // todo: check status if failed, clear the data from the database
+                $type = "success";
+                $message = "Payment Sucessfully made\nThank you.";
+                return redirect(route('ekn.payment_msg',[$payment_reference,$type,$message]));
+
+            }
+
+            public function payment_message($participant,$type,$message)
+            {
+
+                return view('participant.paymentRedirect',compact('participant','type','message'));
+
+            }
+
+
+        }

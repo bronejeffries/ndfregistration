@@ -6,7 +6,7 @@ $(document).ready(function() {
         buttons: [
             {
                 extend:'print',
-                autoPrint:false,
+                autoPrint:true,
                 title:"",
                 about:"",
                 messageTop: message,
@@ -14,9 +14,9 @@ $(document).ready(function() {
                 customize: function ( win ) {
                         $(win.document.body)
                             .addClass('bg-white')
-                            .prepend(
-                                '<img src="http://localhost:8000/assets/images/large nnabagereka logo.jpg" style="position:absolute; width:1000; height:2000; top:250; left:10; right:10;" >'
-                                )
+                            // .prepend(
+                            //     '<img src="http://localhost:8000/assets/images/large nnabagereka logo.jpg" style="position:absolute; width:1000; height:2000; top:250; left:10; right:10;" >'
+                            //     )
                             .css( 'font-size', '10pt' );
 
                         $(win.document.body).find( 'table' )
@@ -27,6 +27,10 @@ $(document).ready(function() {
                         .css('margin-left','10%')
                         .css('margin-right','10%');
                     }
+            },
+            {
+                extend: 'pdfHtml5',
+                messageTop: "message"
             }
         ]
     } );
@@ -55,9 +59,22 @@ $(document).ready(function() {
                     .css('margin-left','10%')
                     .css('margin-right','10%');
                 }
-            }
+            },
         ]
     } );
 
     } );
 
+
+    var options = {
+        background: '#FFFFFF',
+        pagesplit: false
+    };
+    let doc = new jsPDF('p','pt','a4')
+    document.getElementById('print_button').addEventListener('click',function(){
+      console.log("print out function");
+      doc.addHTML(document.getElementById('print_out')0,options,function() {
+          doc.save('Mystatement.pdf');
+    })
+
+    });

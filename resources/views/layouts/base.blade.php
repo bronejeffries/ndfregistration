@@ -5,13 +5,15 @@
   <body class="nav-md">
     <div class="container body">
       {{-- <div class="main_container"> --}}
+          @if (Auth::user())
           <!-- sidebar menu -->
-        @include('partials.sidenavbar')
-        <!-- /sidebar menu -->
+          @include('partials.sidenavbar')
+          <!-- /sidebar menu -->
 
-          <!-- top navigation -->
-        @include('partials.topnavbar')
-          <!-- /top navigation -->
+            <!-- top navigation -->
+          @include('partials.topnavbar')
+            <!-- /top navigation -->
+          @endif
 
         <!-- page content -->
         <div class="right_col" role="main">

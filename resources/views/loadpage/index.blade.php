@@ -62,12 +62,25 @@
 
 				<!-- Nav menu -->
 				<ul class="navbar-menu nav navbar-nav navbar-right">
-					<li class="has-dropdown"><a href="#">Isaac</a>
-						<ul class="dropdown">
-							<li><a href="{{ route('ekns.index') }}"> <i class="fa fa-tachometer"></i> Dashboard View</a></li>
-							<li><a href="#"> <i class="fa fa-sign-out"></i> Logout</a></li>
-						</ul>
-					</li>
+                    @guest
+                    <li class="has-dropdown"><a href="#">
+                            Guest
+                        </a>
+                            <ul class="dropdown">
+                                <li><a href="{{ route('login') }}"> <i class="fa fa-tachometer"></i>Login</a></li>
+                            </ul>
+                    </li>
+                    @else
+                    <li class="has-dropdown"><a href="#">
+                        {{ Auth::user()->name }}
+                        </a>
+                            <ul class="dropdown">
+                                <li><a href="{{ route('ekns.index') }}"> <i class="fa fa-tachometer"></i> Dashboard View</a></li>
+                                <li><a href="#"> <i class="fa fa-sign-out"></i> Logout</a></li>
+                            </ul>
+                    </li>
+                    @endguest
+
 				</ul>
 				<!-- Nav menu -->
 			</div>

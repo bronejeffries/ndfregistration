@@ -8,7 +8,9 @@ class Participant extends Model
 {
     //
 
-    protected $guarded = ['id'];
+    protected $guarded = ['id'], $attributes = [
+        'payment_reference'=>0
+    ];
 
     public function ekn()
     {
