@@ -1,0 +1,41 @@
+[33mcommit 0b29cc751121cf8c74f938840c0f33e9088a7ea7[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Your Name <you@example.com>
+Date:   Fri Oct 25 12:36:25 2019 +0300
+
+    remove changes
+
+[33mcommit 6e9055879067ad5deae3af19932c510cd3a69d33[m[33m ([m[1;31mheroku/master[m[33m)[m
+Author: Your Name <you@example.com>
+Date:   Wed Oct 23 09:52:42 2019 +0300
+
+    user seed
+
+[33mcommit 9347bdc5a63d6a4d9f42fc8d70da9825c1cce2e7[m
+Author: Your Name <you@example.com>
+Date:   Wed Oct 23 09:47:50 2019 +0300
+
+    faker install
+
+[33mcommit 1c49114128ab4fec7065e1c33435f778682efb50[m
+Author: Your Name <you@example.com>
+Date:   Wed Oct 23 09:40:32 2019 +0300
+
+    integration and auth changes
+
+[33mcommit dd397bd107cf34adc4515970fedb30572d1d4ce6[m
+Author: Your Name <you@example.com>
+Date:   Fri Oct 11 16:32:14 2019 +0300
+
+    storage
+
+[33mcommit 6da5dc3e6b9d2f5963217011ed6a86ca731aa1f1[m
+Author: Your Name <you@example.com>
+Date:   Fri Oct 11 15:54:45 2019 +0300
+
+    initial db
+
+[33mcommit 357d6e38220f3b584b8b2b203cc258bd6f9e454d[m
+Author: Your Name <you@example.com>
+Date:   Fri Oct 11 15:31:14 2019 +0300
+
+    initial
