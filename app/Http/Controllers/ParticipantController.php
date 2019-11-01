@@ -86,6 +86,7 @@ class ParticipantController extends Controller
                 'emergency_contact_name'=>'required|string',
                 'emergency_contact_tel'=>'required|string',
                 'emergency_contact_relationship'=>'required|string',
+                'contact_email'=>'required|email',
                 'specialNotes'=>'required|string',
                 'response'=>'required|string',
                 'luganda_classes'=>'required|integer',
@@ -109,7 +110,7 @@ class ParticipantController extends Controller
 
         $this->storeImage($newParticipant);
 
-        return $this->makeParticipantPayment($newParticipant->id);
+        return $this->makeParticipantPayment($newParticipant);
         // return redirect(route('participants.show',[$newParticipant]));
 
     }
@@ -124,6 +125,7 @@ class ParticipantController extends Controller
     {
         //
         return view('participant.show',compact('participant'));
+
     }
 
 
@@ -177,6 +179,7 @@ class ParticipantController extends Controller
         }
         $participant->delete();
         return redirect(route('ekns.show',[$ekn]))->with('success','Participant removed successfully');
+
     }
 
     public function storeImage(Participant $participant)
@@ -193,14 +196,22 @@ class ParticipantController extends Controller
         }
     }
 
-    public function makeParticipantPayment($participant_id){
+    public function signatureMethod()
+    {
+        return new OAuthSignatureMethod_HMAC_SHA1();
+    }
+
+    public function makeParticipantPayment(Participant $participant){
+
+            $reference = $participant->getRouteKey();//unique order id of the transaction, generated
+            $participant->update(['payment_reference'=>$reference]);
 
             $token = $params = NULL;
             $consumer_key = 'BLLEhnI/koKYAJ3PsJEgL3RcWRMrblU+';
             $consumer_secret='wLz4ntDRAF8D0EMaRbykZjnmlfA=';
             // $consumer_key = 'QJotK9ZtKoDTHyow6aAEHLwPUhQpa1jZ';
             // $consumer_secret='k84uKG3iCbmnRr7FqUhQAfMKt1I=';
-            $signature_method = new OAuthSignatureMethod_HMAC_SHA1();
+            $signature_method = $this->signatureMethod();
             $iframelink = 'http://demo.pesapal.com/api/PostPesapalDirectOrderV4';
 
             // $amount = $_POST['amount'];
@@ -208,10 +219,9 @@ class ParticipantController extends Controller
             $amount = number_format($amount, 2); //format amount to 2 decimal places
             $desc = 'description';
             $type = 'MERCHANT'; //default value = MERCHANT
-            $reference = $participant_id; //unique order id of the transaction, generated
-            $first_name = 'first_name'; //[optional]
-            $last_name = 'last_name'; //[optional]
-            $email = "bronej.jeffries2067@gmail.com";
+            $first_name = $participant->name; //[optional]
+            $last_name = " ";
+            $email = $participant->contact_email;
             //ONE of email or phonenumber is required
             $Currency = "UGX";
 
@@ -234,11 +244,94 @@ class ParticipantController extends Controller
             public function paymentRedirect(Request $request)
             {
 
-                $payment_reference = $request->pesapal_merchant_reference;
-                // todo: check status if failed, clear the data from the database
-                $type = "success";
-                $message = "Payment Sucessfully made\nThank you.";
-                return redirect(route('ekn.payment_msg',[$payment_reference,$type,$message]));
+                return $this->handlePaymentResponse($request);
+
+            }
+
+            public function handlePaymentResponse($request)
+            {
+
+                $consumer_key = 'BLLEhnI/koKYAJ3PsJEgL3RcWRMrblU+';
+                $consumer_secret='wLz4ntDRAF8D0EMaRbykZjnmlfA=';
+                $statusrequestAPI='https://demo.pesapal.com/api/querypaymentstatus';
+
+                $pesapalNotification ="CHANGE";
+                $pesapalTrackingId =$request->pesapal_transaction_tracking_id;
+                $pesapal_merchant_reference = $request->pesapal_merchant_reference;
+
+                $participant = Participant::where('payment_reference',$pesapal_merchant_reference)->first();
+
+                if ($pesapalNotification=="CHANGE" && $pesapalTrackingId!='') {
+
+                    $token = $params = NULL;
+                    $consumer = new OAuthConsumer($consumer_key, $consumer_secret);
+                    //get transaction status
+                    $request_status = OAuthRequest::from_consumer_and_token($consumer,$token, "GET", $statusrequestAPI, $params);
+                    $request_status->set_parameter("pesapal_merchant_reference",$pesapal_merchant_reference);
+                    $request_status->set_parameter("pesapal_transaction_tracking_id",$pesapalTrackingId);
+                    $request_status->sign_request($this->signatureMethod(), $consumer, $token);
+
+                    $ch=curl_init();
+                    curl_setopt($ch,CURLOPT_URL, $request_status);
+                    curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch,CURLOPT_HEADER, 1);
+                    curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, 0);
+
+                    if(defined('CURL_PROXY_REQUIRED')) if (CURL_PROXY_REQUIRED == 'True')
+                    {
+                            $proxy_tunnel_flag = (defined('CURL_PROXY_TUNNEL_FLAG') &&
+                            strtoupper(CURL_PROXY_TUNNEL_FLAG) == 'FALSE') ? false : true;
+                            curl_setopt ($ch, CURLOPT_HTTPPROXYTUNNEL, $proxy_tunnel_flag);
+                            curl_setopt ($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
+                            curl_setopt($ch, CURLOPT_PROXY, CURL_PROXY_SERVER_DETAILS);
+                    }
+
+                    $response = curl_exec($ch);
+
+                    $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+                    $raw_header = substr($response, 0, $header_size - 4);
+                    $headerArray = explode("\r\n\r\n", $raw_header);
+                    $header= $headerArray[count($headerArray) - 1];
+
+                    //transaction status
+                    $elements = preg_split("/=/",substr($response,$header_size));
+                    $status = $elements[1];
+
+                    curl_close ($ch);
+
+                    if ($status=="FAILED") {
+
+                        // todo: check status if failed, clear the data from the database
+
+                        $type = "warning";
+
+                        $message = "Your transaction has failed please try again.";
+
+                        $this->destroy($participant);
+
+                        return redirect(route('ekn.payment_msg',[null,$type,$message]));
+
+                    }else{
+
+                        $participant->update([
+
+                            'payment_tracking_id'=>$pesapalTrackingId,
+
+                            'isPaid'=>true,
+
+                            'payment_status'=>$status
+
+                            ]);
+
+                        $type = "success";
+
+                        $message = "Payment Sucessfully made\nThank you.";
+
+                        return redirect(route('ekn.payment_msg',[$pesapal_merchant_reference,$type,$message]));
+
+                    }
+
+                }
 
             }
 

@@ -1,8 +1,8 @@
 @extends('layouts.base')
 
 @section('content')
-
-<div class="">
+<div id="loader"></div>
+<div id="myDiv" class="animate-bottom">
     <div class="page-title">
       <div class="title_left">
         <h3>{{ $ekisakaate->name }} {{ $ekisakaate->description }}</h3>
@@ -93,7 +93,7 @@
                               </tr>
                             </thead>
                             <tbody>
-                                @foreach ($ekisakaate->participants as $key=>$participant)
+                                @foreach ($participants as $key=>$participant)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $participant->name }} </td>

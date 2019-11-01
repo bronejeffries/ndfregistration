@@ -66,7 +66,7 @@
 @endguest
 <div class="clearfix"></div>
 
-<div class="bg-light" id="info-mation">
+<div class="animate-bottom bg-light" id="info-mation">
     <div class="print_out" id="print_out" >
         <div class="page-title row bg-light">
           <div class="col-md-3 col-sm-3 col-xs-3">

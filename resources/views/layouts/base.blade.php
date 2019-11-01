@@ -2,7 +2,7 @@
 <html lang="en">
   @include('partials.head')
 
-  <body class="nav-md">
+  <body onload="myFunction()" class="nav-md">
     <div class="container body">
       {{-- <div class="main_container"> --}}
           @if (Auth::user())

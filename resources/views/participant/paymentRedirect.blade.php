@@ -1,8 +1,8 @@
 @extends('layouts.base')
 
 @section('content')
-
-<div class="">
+<div id="loader"></div>
+<div id="myDiv" class="animate-bottom">
     <div class="page-title">
       <div class="title_left">
         <h3>Payment</h3>
@@ -26,19 +26,26 @@
                                     </button>
                                     <strong> <i class="fa fa-info-circle fa-3x"></i>{{ $message }} </strong>
                             </div>
-                            <div class="col-md-5">
+                            @if ($type=='success')
+
+                                <div class="col-md-5">
                                     <a class="btn btn-success" href="{{ route('load.index') }}">
                                         finish
                                     </a>
-                            </div>
+                                </div>
 
-                            @if ($type=='success')
-                            <div class="col-md-5 pull-right">
-                                    <a class="btn btn-info" href="{{ route('participants.show',[$participant]) }}">
-                                        view registered participant
+                                <div class="col-md-5 pull-right">
+                                            <a class="btn btn-info" href="{{ route('participants.show',[$participant]) }}">
+                                                view registered participant
+                                            </a>
+                                </div>
+                            @else
+                                <div class="col-md-5">
+                                    <a class="btn btn-danger" href="{{ route('load.index') }}">
+                                        Try Again!
                                     </a>
-                            </div>
-                        @endif
+                                </div>
+                            @endif
 
                       </div>
                     </div>

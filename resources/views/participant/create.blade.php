@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
 <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -304,6 +302,17 @@
                                         <span class="text-danger">{{ $errors->first('father_contact') }}</span>
                                         </div>
                                 </div>
+
+                                <div class="form-group">
+
+                                    <label class="control-label col-md-2 col-sm-2">Contact Email</label>
+                                    <div class="col-md-4 col-sm-4">
+                                    <input type="email" name="contact_email" value="{{ old('contact_email') }}" required class="form-control col-md-7 col-xs-12">
+                                    <span class="text-danger">{{ $errors->first('contact_email') }}</span>
+                                    </div>
+
+                                </div>
+
                                 <p>
                                     <strong>
                                             IN CASE OF ANY EMERGENCY, PLEASE LIST A PERSON WE CAN CONTACT IF WE ARE UNABLE TO REACH YOU.
@@ -368,7 +377,7 @@
                                     <h2 class="StepTitle">7</h2>
                                     <span class="section">PARENT’S/GUARDIAN’S INFORMATION.</span>
                                     <p>
-                                        <h4><strong>EKN FEES: 352,200/= (Thirty-five thousand two thousand two hundred shillings only)</strong></h4>
+                                        <h4><strong>EKN FEES: 352,200/= (Three hundred fifty two thousand two hundred shillings only)</strong></h4>
                                         <h5><strong>Breakdown:</strong></h5>
                                         <ul>
                                                 <li>Registration Fee: 10,000/= (paid in cash on registration)</li>

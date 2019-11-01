@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Http\Traits\Hashidable;
+use \Hashids;
 class Ekisakaate extends Model
 {
     //
+
+    use Hashidable;
 
     protected $guarded = ['id'];
 

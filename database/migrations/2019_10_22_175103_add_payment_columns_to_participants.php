@@ -14,9 +14,13 @@ class AddPaymentColumnsToParticipants extends Migration
     public function up()
     {
         Schema::table('participants', function (Blueprint $table) {
+
             //
-            $table->integer("payment_reference")->default(0);
-            $table->string("payment_status")->nullable();
+            $table->string("payment_status")->default("PENDING");
+            $table->string("payment_reference")->nullable();
+            $table->string("payment_tracking_id")->nullable();
+            $table->boolean("isPaid")->default(false);
+
 
         });
 

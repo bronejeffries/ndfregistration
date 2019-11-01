@@ -1,8 +1,8 @@
 @extends('layouts.base')
 
 @section('content')
-
-<div class="">
+<div id="loader"></div>
+<div id="myDiv" class="animate-bottom">
     <div class="page-title">
       <div class="title_left">
         <h3>Active Years</h3>

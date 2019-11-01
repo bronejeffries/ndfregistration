@@ -33,6 +33,7 @@ class CreateParticipantsTable extends Migration
             $table->string('emergency_contact_name');
             $table->string('emergency_contact_tel');
             $table->string('emergency_contact_relationship');
+            $table->string('contact_email');
             $table->string('specialNotes');
             $table->string('response');
             $table->boolean('luganda_classes');

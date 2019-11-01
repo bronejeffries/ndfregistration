@@ -41,5 +41,6 @@
     <!-- Custom Theme Style -->
     <link href="{{ asset('assets/build/css/custom.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/build/css/printcss.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/loaderCss.css') }}" rel="stylesheet">
 
   </head>
