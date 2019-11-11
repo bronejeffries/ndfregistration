@@ -61,11 +61,11 @@
           </div>
         </div>
 
-          <div class="col-md-3 col-lg-3 col-sm-3 align-content-center col-xs-3">
+          {{-- <div class="col-md-3 col-lg-3 col-sm-3 align-content-center col-xs-3">
               <div class="profile_pic">
                   <img src="{{ 'assets/images/ug-buga2.jpg' }}" alt="..." style="width:110px; height:90px;" class="profile_img">
               </div>
-          </div>
+          </div> --}}
         <div class="col-md-3 col-sm-3 col-lg-3 col-xs-3">
               <div class="profile_pic pull-right">
                   <img src="{{ 'assets/images/ndf.jpg' }}" alt="..." style="width:100px;" class="profile_img">
