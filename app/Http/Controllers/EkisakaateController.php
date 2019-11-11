@@ -83,7 +83,7 @@ class EkisakaateController extends Controller
     public function show(Ekisakaate $ekisakaate)
     {
         //
-        $participants = $ekisakaate->participants->where("payment_status","!=","PENDING");
+        $participants = $ekisakaate->participants->where('isPaid',true);
         return view('ekisakaate.show',compact('ekisakaate','participants'));
 
     }

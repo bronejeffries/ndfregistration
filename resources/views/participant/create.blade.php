@@ -38,7 +38,7 @@
 
                     <h2>PARTICIPANT</h2>
                     <!-- Tabs -->
-                    <form action="{{ route('participants.store') }}" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left">
+                    <form id="participantForm" action="{{ route('participants.store') }}" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left">
                         @csrf
                         <div id="wizard_verticle" class="form_wizard wizard_verticle">
                             <ul class="list-unstyled wizard_steps">
@@ -474,6 +474,8 @@
                                                                 </div>
                                                         </fieldset>
 
+                                                        <input type="hidden" name="p_type_input" id="p_type_">
+
                                                     </div>
                                             </strong>
                                     </p>
@@ -491,5 +493,32 @@
             </div>
 </div>
 
+{{-- summary graph modal --}}
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Payment</h4>
+        </div>
+        <div class="modal-body">
+                <div class="x_panel">
+                <div class="x_content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('p_type_').value='c'; document.getElementById('participantForm').submit(); ">Cash Payment</button>
+                            </div>
+                            <div class="col-md-6">
+                                    <button class="btn btn-default" disabled>Online Payment</button>
+                            </div>
+                        </div>
+                </div>
+                </div>
+        </div>
+
+      </div>
+    </div>
+</div>
 
 @endsection

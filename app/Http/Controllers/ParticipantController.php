@@ -104,14 +104,28 @@ class ParticipantController extends Controller
             throw $th;
 
         }catch(Throwable $th){
-            // return back()->with('warning','Something Went Wrong');
-            dd($th);
+            return back()->with('warning','Something Went Wrong');
+            // dd($th);
         }
 
         $this->storeImage($newParticipant);
 
-        return $this->makeParticipantPayment($newParticipant);
-        // return redirect(route('participants.show',[$newParticipant]));
+        // check if payment is by cash
+        if ($request->p_type_input=='c') {
+
+            $newParticipant->update([
+
+                'isPaid'=>true,
+
+                ]);
+
+                return redirect(route('participants.show',[$newParticipant]));
+
+        }else{
+
+            return $this->makeParticipantPayment($newParticipant);
+
+        }
 
     }
 
@@ -244,20 +258,21 @@ class ParticipantController extends Controller
             public function paymentRedirect(Request $request)
             {
 
-                return $this->handlePaymentResponse($request);
+                $pesapalTrackingId = $request->pesapal_transaction_tracking_id;
+                $pesapal_merchant_reference = $request->pesapal_merchant_reference;
+                return redirect(route('ekn.payment_msg',["pesapalTrackingId"=>$pesapalTrackingId,"pesapal_merchant_reference"=>$pesapal_merchant_reference]));
 
             }
 
-            public function handlePaymentResponse($request)
+            // api request
+            public function handlePaymentResponse($pesapal_transaction_tracking_id,$pesapal_merchant_reference)
             {
-
                 $consumer_key = 'BLLEhnI/koKYAJ3PsJEgL3RcWRMrblU+';
                 $consumer_secret='wLz4ntDRAF8D0EMaRbykZjnmlfA=';
                 $statusrequestAPI='https://demo.pesapal.com/api/querypaymentstatus';
 
                 $pesapalNotification ="CHANGE";
-                $pesapalTrackingId =$request->pesapal_transaction_tracking_id;
-                $pesapal_merchant_reference = $request->pesapal_merchant_reference;
+                $pesapalTrackingId =$pesapal_transaction_tracking_id;
 
                 $participant = Participant::where('payment_reference',$pesapal_merchant_reference)->first();
 
@@ -309,7 +324,7 @@ class ParticipantController extends Controller
 
                         $this->destroy($participant);
 
-                        return redirect(route('ekn.payment_msg',[null,$type,$message]));
+                        return response()->json(["participant"=>null,"type"=>$type,"message"=>$message]);
 
                     }else{
 
@@ -324,10 +339,9 @@ class ParticipantController extends Controller
                             ]);
 
                         $type = "success";
-
                         $message = "Payment Sucessfully made\nThank you.";
 
-                        return redirect(route('ekn.payment_msg',[$pesapal_merchant_reference,$type,$message]));
+                        return response()->json(["participant"=>$pesapal_merchant_reference,"type"=>$type,"message"=>$message]);
 
                     }
 
@@ -335,10 +349,10 @@ class ParticipantController extends Controller
 
             }
 
-            public function payment_message($participant,$type,$message)
+            public function payment_message($pesapalTrackingId,$pesapal_merchant_reference)
             {
 
-                return view('participant.paymentRedirect',compact('participant','type','message'));
+                return view('participant.paymentRedirect',compact('pesapal_merchant_reference','pesapalTrackingId'));
 
             }
 

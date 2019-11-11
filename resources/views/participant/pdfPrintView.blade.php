@@ -54,6 +54,25 @@
 		<!-- /container -->
 </div> --}}
 
+<div class="page-title row bg-light">
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <div class="title-left profile_pic pull-left">
+              <img src="{{ 'assets/images/kisaakateLogo.jpg' }}" alt="..." style="width:100px;" class="profile_img">
+          </div>
+        </div>
+
+          <div class="col-md-3 col-lg-3 col-sm-3 align-content-center col-xs-3">
+              <div class="profile_pic">
+                  <img src="{{ 'assets/images/ug-buga2.gif' }}" alt="..." style="width:110px; height:90px;" class="profile_img">
+              </div>
+          </div>
+        <div class="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+              <div class="profile_pic pull-right">
+                  <img src="{{ 'assets/images/ndf.jpg' }}" alt="..." style="width:100px;" class="profile_img">
+                </div>
+        </div>
+</div>
+
 <div class="container-fluid">
         <!-- row -->
         <div class="section row">

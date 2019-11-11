@@ -107,7 +107,7 @@
                                   <div class="form-group row">
                                       {{-- <div class="pull-right col-md-4"> --}}
                                           <div class="pull-right col-md-3 col-sm-3">
-                                              <img src="{{ asset('storage/'.$participant->image_name) }}" style="width:200px; height:180px;" alt="photo" class="img-thumbnail profile_img">
+                                              <img src="{{ asset('storage/'.$participant->image_name) }}" style="width:120px; height:120px;" alt="photo" class="img-thumbnail profile_img">
                                           </div>
                                           {{-- <label class="control-label col-md-2 col-sm-2">Photo</label> --}}
                                       {{-- </div> --}}

@@ -23,7 +23,7 @@ function SmartWizard(target, options) {
     this.buttons = {
         next : $('<a>'+options.labelNext+'</a>').attr("href","#").addClass("buttonNext"),
         previous : $('<a>'+options.labelPrevious+'</a>').attr("href","#").addClass("buttonPrevious"),
-        finish  : $('<a>'+options.labelFinish+'</a>').attr("type","submit").addClass("buttonFinish")
+        finish  : $('<button>'+options.labelFinish+'</button>').attr("type","button").attr("data-toggle","modal").attr("data-target",".bs-example-modal-lg").addClass("buttonFinish")
     };
 
     /*
@@ -66,7 +66,7 @@ function SmartWizard(target, options) {
             $this.goBackward();
             return false;
         });
-        $($this.buttons.finish).click(function() {
+        $($this.buttons.finish).click(function(event) {
             if(!$(this).hasClass('buttonDisabled')){
                 if($.isFunction($this.options.onFinish)) {
                     var context = { fromStep: $this.curStepIdx + 1 };
@@ -76,7 +76,8 @@ function SmartWizard(target, options) {
                 }else{
                     var frm = $this.target.parents('form');
                     if(frm && frm.length){
-                        frm.submit();
+                        // frm.submit();
+                        event();
                     }
                 }
             }

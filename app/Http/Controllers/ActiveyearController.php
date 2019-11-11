@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Activeyear;
 use Illuminate\Http\Request;
+use App\Http\Resources\ActiveYearResource;
 
 class ActiveyearController extends Controller
 {
@@ -57,14 +58,21 @@ class ActiveyearController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     *
+     * return the json details of the specified resource.
      *
      * @param  \App\Activeyear  $activeyear
      * @return \Illuminate\Http\Response
      */
-    public function show(Activeyear $activeyear)
+    public function show($activeyear)
     {
         //
+        $activeyear = (new Activeyear())->resolveRouteBinding($activeyear);
+        // $activeyear = $model->resolveRouteBinding($activeyear);
+        $active_year = new ActiveYearResource($activeyear);
+        $summary = ["active_year"=>$active_year];
+        return response()->json($summary);
+
     }
 
     /**
@@ -99,5 +107,9 @@ class ActiveyearController extends Controller
     public function destroy(Activeyear $activeyear)
     {
         //
+        $activeyear->delete();
+        return back()->with('info','Year removed successfully');
     }
+
+
 }

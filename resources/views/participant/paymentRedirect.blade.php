@@ -1,8 +1,8 @@
 @extends('layouts.base')
 
 @section('content')
-<div id="loader"></div>
-<div id="myDiv" class="animate-bottom">
+<div id="frame_loader"></div>
+<div class="animate-bottom">
     <div class="page-title">
       <div class="title_left">
         <h3>Payment</h3>
@@ -14,38 +14,28 @@
       </div>
     </div>
     <div class="clearfix"></div>
-
     <div class="row">
-
             <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
+                <div style="display:none;" class="x_panel">
                       <div class="x_content">
 
-                            <div class="alert alert-{{ $type }} alert-dismissible fade in" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                                    </button>
-                                    <strong> <i class="fa fa-info-circle fa-3x"></i>{{ $message }} </strong>
+                            <div id="message_alert" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                </button>
+                                <strong><i class="fa fa-info-circle fa-3x"></i><span id="message_holder" >$message</span></strong>
                             </div>
-                            @if ($type=='success')
 
-                                <div class="col-md-5">
-                                    <a class="btn btn-success" href="{{ route('load.index') }}">
+                                <div style="display:none;" id="msbn" class="col-md-5">
+                                    <a id="finish"  href="{{ route('load.index') }}">
                                         finish
                                     </a>
                                 </div>
 
-                                <div class="col-md-5 pull-right">
-                                            <a class="btn btn-info" href="{{ route('participants.show',[$participant]) }}">
+                                <div style="display:none;" id="psbn" class="col-md-5 pull-right">
+                                            <a class="btn btn-info" id="pSl" href="#">
                                                 view registered participant
                                             </a>
                                 </div>
-                            @else
-                                <div class="col-md-5">
-                                    <a class="btn btn-danger" href="{{ route('load.index') }}">
-                                        Try Again!
-                                    </a>
-                                </div>
-                            @endif
 
                       </div>
                     </div>
@@ -54,6 +44,16 @@
     </div>
 </div>
 
+<form style="display:none;" action="#">
+    <input type="hidden" name="" id="prRef_holder" value="{{ $pesapal_merchant_reference }}">
+    <input type="hidden" name="" id="tid_holder" value="{{ $pesapalTrackingId }}">
+</form>
+
 @endsection
 
+@section('footerjs_extra')
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{{ asset('assets/scripts/handlePjs.js') }}"></script>
+
+@endsection

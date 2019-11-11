@@ -73,7 +73,7 @@ $(document).ready(function() {
     let doc = new jsPDF('p','pt','a4')
     document.getElementById('print_button').addEventListener('click',function(){
       console.log("print out function");
-      doc.addHTML(document.getElementById('print_out')0,options,function() {
+      doc.addHTML(document.getElementById('print_out'),0,options,function() {
           doc.save('Mystatement.pdf');
     })
 

@@ -49,6 +49,11 @@ return [
             'length' => '10',
         ],
 
+        \App\Activeyear::class => [
+            'salt' => \App\Activeyear::class.'7623e9b0009feff8e024a689d6ef59ce',
+            'length' => '10',
+        ],
+
         'main' => [
             'salt' => 'your-salt-string',
             'length' => 'your-length-integer',

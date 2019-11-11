@@ -22,7 +22,12 @@
                     <div class="x_title">
                       <h2>{{ $ekisakaate->name }} {{ $ekisakaate->description }} participants <small>({{ $ekisakaate->status() }})</small></h2>
                       <ul class="nav navbar-right panel_toolbox">
-                          @if ((bool)$ekisakaate->open)
+                        <li>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                    participants gallery
+                                </button>
+                          </li>
+                        @if ((bool)$ekisakaate->open)
                               <li>
                                   {{-- <button> --}}
                                           <a class="btn btn-success text-success" href="#" onclick="event.preventDefault();
@@ -69,7 +74,7 @@
                               </li>
                             </ul>
                           </li>
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        <li><a id="closeup" class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
                         <li><a class="close-link"><i class="fa fa-close"></i></a>
                         </li>
@@ -119,6 +124,59 @@
                 </div>
 
     </div>
+</div>
+
+{{-- gallery modal --}}
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">Participants</h4>
+            </div>
+            <div class="modal-body">
+                    <div class="row">
+                            <div class="col-md-12">
+                              <div class="x_panel">
+
+                                <div class="x_content">
+
+                                  <div class="row">
+
+                                    @foreach ($participants as $participantArchive)
+
+                                    <div class="col-md-55">
+                                            <div class="thumbnail">
+                                              <div class="image view view-first">
+                                                <img style="width: 100%; display: block;" src="{{ asset('storage/'.$participantArchive->image_name) }}" alt="image" />
+                                                <div class="mask">
+                                                  <p>{{ $participantArchive->getRouteKey() }}</p>
+                                                  <div class="tools tools-bottom">
+                                                    <a href="{{ route('participants.show',[$participantArchive]) }}"><i class="fa fa-link"></i></a>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="caption">
+                                                <p>{{ $participantArchive->name }}</p>
+                                              </div>
+                                            </div>
+                                    </div>
+
+                                    @endforeach
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+        </div>
 </div>
 
 @endsection
