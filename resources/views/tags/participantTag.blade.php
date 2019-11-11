@@ -51,7 +51,7 @@
 
                                     <div class="col-md-3 col-sm-3 col-xs-3">
                                         <div class="profile_pic">
-                                            <img src="{{ asset('assets/images/ug-buga2.gif') }}" alt="..." style="width:65px; height:60px;" class="profile_img">
+                                            <img src="{{ asset('assets/images/ug-buga2.jpg') }}" alt="..." style="width:65px; height:60px;" class="profile_img">
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-3 col-xs-3">

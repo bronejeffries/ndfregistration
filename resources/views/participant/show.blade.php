@@ -77,7 +77,7 @@
 
             <div class="col-md-3 col-sm-3 align-content-center col-xs-3">
                 <div class="profile_pic pull-right">
-                    <img src="{{ asset('assets/images/ug-buga2.gif') }}" alt="..." style="width:110px; height:90px;" class="profile_img">
+                    <img src="{{ asset('assets/images/ug-buga2.jpg') }}" alt="..." style="width:110px; height:90px;" class="profile_img">
                 </div>
             </div>
           <div class="col-md-3 col-sm-3 col-xs-3 form-group pull-right top_search">
