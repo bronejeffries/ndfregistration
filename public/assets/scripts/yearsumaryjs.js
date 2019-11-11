@@ -1,8 +1,15 @@
 
+var hostPath;
+var protocol;
+
+
 function loadYearSummary(id,canvasId) {
 
+    hostPath = window.location.host+"/"
+    protocol = window.location.protocol+"//"
+
     $("#frame_loader").css('display',"")
-    var host = "http://localhost:8000/api/activeyear/"+id+"/data";
+    var host = protocol+hostPath+"api/activeyear/"+id+"/data";
     console.log(host);
         $.ajax({url: host,
           success: function(result){

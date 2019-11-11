@@ -91,7 +91,7 @@
                                     <i class="fa fa-users aero"></i>
                                     </a>
                                     <div class="media-body">
-                                    <a class="title" href="{{ route('activeyears.show',[$lastyear]) }}">{{ $lastyear->name }}</a>
+                                    <a class="title" href="#">{{ $lastyear->name }}</a>
                                     <p> <strong> <a href="#">Participants data analysis</a></strong></p>
                                     </div>
                             </li>

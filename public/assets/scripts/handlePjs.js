@@ -6,7 +6,13 @@ var prRef;
 var tId;
 var res_type;
 
+var hostPath;
+var protocol;
+
 $(document).ready(function(){
+
+    hostPath = window.location.host+"/"
+    protocol = window.location.protocol+"//"
 
     tId = $("#tid_holder").val();
     prRef = $("#prRef_holder").val();
@@ -17,7 +23,8 @@ $(document).ready(function(){
 
   function getSatus(tId,prRef) {
 
-    var host = "http://localhost:8000/api/handleresponsePment/"+tId+"/"+prRef+"/clear";
+    var host = protocol+hostPath+"api/handleresponsePment/"+tId+"/"+prRef+"/clear";
+
     $.ajax({url: host,
         success: function(result){
             console.log("result",result);
@@ -60,7 +67,7 @@ $(document).ready(function(){
 
     function createShowUrl(params) {
 
-        var href = "http://localhost:8000/participants/"+params.prRef+"/";
+        var href = hostPath+"participants/"+params.prRef+"/";
         $("#pSl").attr("href",href);
         $("#psbn").css("display","");
 

@@ -1,9 +1,14 @@
 
-var host = "http://localhost:8000/api/dashboard/summary/data";
-
+var host;
 var chart;
+var hostPath;
+var protocol;
 
 $(document).ready(function(){
+
+    hostPath = window.location.host+"/"
+    protocol = window.location.protocol+"//"
+    host = protocol+hostPath+"api/dashboard/summary/data";
     console.log("loading here");
       $.ajax({url: host,
         success: function(result){

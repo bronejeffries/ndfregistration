@@ -46,7 +46,7 @@
                               @foreach ($activeyears as $key=>$year)
                               <tr>
                                   <td>
-                                        <a href="{{ route('activeyears.show',[$year]) }}">
+                                        <a href="#">
                                                 {{ $year->name }}
                                         </a>
                                 </td>
