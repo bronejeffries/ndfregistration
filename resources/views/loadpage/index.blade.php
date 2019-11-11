@@ -75,7 +75,7 @@
                         {{ Auth::user()->name }}
                         </a>
                             <ul class="dropdown">
-                                <li><a href="{{ route('ekns.index') }}"> <i class="fa fa-tachometer"></i> Dashboard View</a></li>
+                                <li><a href="{{ route('dashboard') }}"> <i class="fa fa-tachometer"></i> Dashboard View</a></li>
                                 <li><a href="#"> <i class="fa fa-sign-out"></i> Logout</a></li>
                             </ul>
                     </li>

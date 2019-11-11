@@ -17,8 +17,8 @@
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.1",
         "vinkla/hashids": "^7.0",
-    "ext-gmp":"*",
-    "ext-gd":"*"
+        "ext-gmp":"*",
+        "ext-gd":"*"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
