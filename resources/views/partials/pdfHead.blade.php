@@ -11,7 +11,6 @@
      <!-- Bootstrap -->
      <link href="{{ 'charityassets/css/bootstrap.min.css' }}" rel="stylesheet">
 
-
     <!-- Custom Theme Style -->
     <link href="{{ 'charityassets/css/style.css' }}" rel="stylesheet">
 

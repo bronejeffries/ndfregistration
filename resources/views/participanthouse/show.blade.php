@@ -5,7 +5,7 @@
 <div id="myDiv" class="animate-bottom">
     <div class="page-title">
       <div class="title_left">
-        <h3>{{ $ekisakaate->name }} {{ $ekisakaate->description }}</h3>
+        <h3>{{ $participanthouse->name }} since {{ Carbon\Carbon::parse($participanthouse->created_at)->format('d-M-Y') }}</h3>
       </div>
 
       <div class="title_right">
@@ -20,59 +20,20 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                      <h2>{{ $ekisakaate->name }} {{ $ekisakaate->description }} participants <small>({{ $ekisakaate->status() }})</small></h2>
+                      <h2>{{ $participanthouse->name }} participants</h2>
                       <ul class="nav navbar-right panel_toolbox">
                         <li>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
                                     participants gallery
                                 </button>
                           </li>
-                          <li>
-                                <a href="{{ route('participants.assignhouse',[$ekisakaate]) }}" class="btn btn-primary text-info">
-                                    Assign houses
-                                </a>
-                          </li>
-                        @if ((bool)$ekisakaate->open)
-                              <li>
-                                  {{-- <button> --}}
-                                          <a class="btn btn-success text-success" href="#" onclick="event.preventDefault();
-                                                              document.getElementById('form-regForm').submit(); ">
-                                            Registration Form
-                                          </a>
-                                          <form  id="form-regForm" action="{{ route('participants.create') }}" method="get">
-                                                  <input type="hidden" value="{{ $ekisakaate->id }}" name="ekn_d">
-                                          </form>
-                                      {{-- </button> --}}
-                                </li>
-                            @endif
                           <li class="dropdown">
                             <a href="#" class="dropdown-toggle btn btn-info text-info btn-outline-info" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench fa-1x"></i> Settings</a>
                             <ul class="dropdown-menu" role="menu">
-                                @if ((bool)$ekisakaate->open)
 
-                                <li>
-                                  <a href="#" onclick="event.preventDefault(); if(confirm('Are you sure you want to close registration')){document.getElementById('form-closeForm').submit();}" class="btn btn-info" > <i class="fa fa-close"></i> Close</a>
-                                  <form  id="form-closeForm" action="{{ route('ekns.update',[$ekisakaate]) }}" method="post">
-                                          @csrf
-                                          @method('PATCH')
-                                          <input type="hidden" value=0 name="open">
-                                  </form>
-                                </li>
-                                @else
-
-                                <li>
-                                    <a href="#" onclick="event.preventDefault(); if(confirm('Are you sure you want to open registration')){document.getElementById('form-openForm').submit();}" class="btn btn-success"> <i class="fa fa-folder-open-o" ></i> Open</a>
-                                    <form  id="form-openForm" action="{{ route('ekns.update',[$ekisakaate]) }}" method="post">
-                                          @csrf
-                                          @method('PATCH')
-                                          <input type="hidden" value=1 name="open">
-                                  </form>
-                                </li>
-
-                                @endif
                               <li>
                                   <a href="#" onclick="event.preventDefault(); if(confirm('Are you sure you want to Delete')){document.getElementById('form-deleteForm').submit();}" class="btn btn-danger"> <i class="fa fa-trash-o"></i> Delete</a>
-                                  <form  id="form-deleteForm" action="{{ route('ekns.destroy',[$ekisakaate]) }}" method="post">
+                                  <form  id="form-deleteForm" action="{{ route('participanthouses.destroy',[$participanthouse]) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                 </form>
@@ -99,12 +60,11 @@
                                 <th>School</th>
                                 <th>Residence</th>
                                 <th>Religion</th>
-                                <th>Payment Status</th>
                                 <th></th>
                               </tr>
                             </thead>
                             <tbody>
-                                @foreach ($participants as $key=>$participant)
+                                @foreach ($participanthouse->participantsAttached as $key=>$participant)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $participant->name }} </td>
@@ -116,7 +76,6 @@
                                         {{ $participant->residence }}
                                     </td>
                                     <td>{{ $participant->religion }}</td>
-                                    <td>{{ $participant->payment_status }}</td>
                                     <td>
                                         <a class="btn btn-primary" href="{{ route('participants.show',[$participant]) }}">
                                             <i class="fa fa-eye"></i> view
@@ -152,7 +111,7 @@
 
                                   <div class="row">
 
-                                    @foreach ($participants as $participantArchive)
+                                    @foreach ($participanthouse->participantsAttached as $participantArchive)
 
                                     <div class="col-md-55">
                                             <div class="thumbnail">

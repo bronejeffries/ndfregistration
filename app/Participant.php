@@ -21,5 +21,15 @@ class Participant extends Model
         return $this->belongsTo(Ekisakaate::class,'ekn_id');
     }
 
+    public function isPending()
+    {
+        return ($this->payment_status == "PENDING" );
+    }
+
+    public function houseAttached()
+    {
+        return $this->belongsTo(Participanthouse::class,'house_id');
+    }
+
 
 }

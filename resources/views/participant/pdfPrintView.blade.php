@@ -80,7 +80,7 @@
             <!-- section title -->
             <div class="col-md-8 col-md-offset-2">
                 <div class="title text-center">
-                    <p class="sub-title">EKISAAKAATE KYA NNABAGEREKA {{ $participant->ekn->description }} {{ $participant->ekn->year }}</p>
+                    <h2 class="sub-title">EKISAAKAATE KYA NNABAGEREKA {{ $participant->ekn->description }} {{ $participant->ekn->year }}</h2>
                     <h4 class="title">PARTICIPANT REGISTRATION FORM</h4>
                 </div>
             </div>
@@ -105,7 +105,7 @@
         <!-- row -->
         <div class="row">
             <div class="pull-right col-md-3 col-sm-3">
-                    <img src="{{ 'storage/'.$participant->image_name }}" style="width:195px; height:170px;" alt="photo" class="img-thumbnail">
+                    <img src="{{ 'storage/'.$participant->image_name }}" style="width:145px; height:170px;" alt="photo" class="img-thumbnail">
             </div>
         </div>
         <!-- /row -->

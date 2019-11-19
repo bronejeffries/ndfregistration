@@ -21,15 +21,10 @@
         <div class="col-md-1 col-sm-1 col-xs-12 form-group">
                 <div class="input-group">
                         <span class="input-group-btn">
-                            <a class="btn btn-success text-white" onclick="event.preventDefault();
-                                                                        document.getElementById('id_form').submit();                                                                          "
-                                                                  href="#">
+                            <a class="btn btn-success text-white" target="_blank" href="{{ route('tags.participant',[$participant]) }}">
                             <i class="fa fa-paste" ></i>
                             Generate Tag
                             </a>
-                            <form id="id_form" action="{{ route('tags.participant',[$participant]) }}" method="post">
-                              @csrf
-                          </form>
                         </span>
                       </div>
         </div>
@@ -62,6 +57,19 @@
             </div>
           </div>
         {{-- </div> --}}
+        @if ($participant->isPending())
+        <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right">
+            <div class="input-group">
+                <form action="{{ route('payment.confirm',[$participant]) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="btn btn-info">
+                            Confirm Payment
+                    </button>
+                </form>
+            </div>
+        </div>
+    @endif
 </div>
 @endguest
 <div class="clearfix"></div>
@@ -468,7 +476,7 @@
 
 <div class="row mr-3" style="overflow:hidden;">
     <div class="col-md-1 col-sm-1 col-xs-12 form-group">
-        <a class="btn btn-success text-white" href="{{ route('pdf.participant',[$participant]) }}">
+        <a class="btn btn-success text-white" target="_blank" href="{{ route('pdf.participant',[$participant]) }}">
                       Print to pdf
                       <i class="fa fa-paste" ></i>
                     </a>

@@ -17,6 +17,9 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
+            {{-- flash message --}}
+            @include('partials.flash')
+            {{-- /flash message --}}
             @yield('content')
         </div>
         <!-- /page content -->

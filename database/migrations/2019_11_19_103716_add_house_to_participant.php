@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class AddForeignKeyToParticipants extends Migration
+class AddHouseToParticipant extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,8 @@ class AddForeignKeyToParticipants extends Migration
     {
         Schema::table('participants', function (Blueprint $table) {
             //
-
-            $table->foreign('ekn_id')->references('id')->on('ekisakaates')->onDelete('cascade');
+            $table->unsignedBigInteger("house_id")->nullable(true);
+            $table->foreign('house_id')->references('id')->on('participanthouses')->onDelete('cascade');
 
         });
     }

@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use \PDF;
 use Throwable;
 use App\Ekisakaate;
 use App\Participant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use App\Http\Controllers\ApiHelpers\OAuthUtil;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\ApiHelpers\OAuthToken;
+use App\Http\Controllers\ApiHelpers\OAuthServer;
+use App\Http\Controllers\ApiHelpers\OAuthRequest;
 use App\Http\Controllers\ApiHelpers\OAuthConsumer;
 use App\Http\Controllers\ApiHelpers\OAuthDataStore;
 use App\Http\Controllers\ApiHelpers\OAuthException;
-use App\Http\Controllers\ApiHelpers\OAuthRequest;
-use App\Http\Controllers\ApiHelpers\OAuthServer;
 use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod;
+use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod_RSA_SHA1;
 use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod_HMAC_SHA1;
 use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod_PLAINTEXT;
-use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod_RSA_SHA1;
-use App\Http\Controllers\ApiHelpers\OAuthToken;
-use App\Http\Controllers\ApiHelpers\OAuthUtil;
-use \PDF;
 
 class ParticipantController extends Controller
 {
@@ -113,13 +114,31 @@ class ParticipantController extends Controller
         // check if payment is by cash
         if ($request->p_type_input=='c') {
 
-            $newParticipant->update([
+            if (Auth::user()) {
 
-                'isPaid'=>true,
+                $newParticipant->update([
 
-                ]);
+                    'isPaid'=>true,
+                    'payment_status'=>"success"
 
-                return redirect(route('participants.show',[$newParticipant]));
+                    ]);
+
+                    $message = "Participant registered with a cash payment detail";
+
+                }else{
+
+                    $message = "This payment will be verified at the office to complete the registration process.";
+
+                    $newParticipant->update([
+
+                        'isPaid'=>true,
+
+                        ]);
+
+            }
+
+            return redirect(route('participants.show',[$newParticipant]))->with('info',$message);
+
 
         }else{
 
@@ -193,6 +212,19 @@ class ParticipantController extends Controller
         }
         $participant->delete();
         return redirect(route('ekns.show',[$ekn]))->with('success','Participant removed successfully');
+
+    }
+
+    public function confirmPayment(Participant $participant)
+    {
+
+        $participant->update([
+            'payment_status'=>"success"
+            ]);
+
+            // dd($participant);
+
+        return back()->with('success',"Payment has been successfully confirmed");
 
     }
 

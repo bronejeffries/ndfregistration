@@ -25,6 +25,12 @@
                             <li><a href="{{ route('activeyears.index') }}">Previous Year</a></li>
                           </ul>
                         </li>
+                        <li><a><i class="fa fa-edit"></i> Participant houses <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                              <li><a href="{{ route('participanthouses.create') }}">New house</a></li>
+                              <li><a href="{{ route('participanthouses.index') }}">List</a></li>
+                            </ul>
+                        </li>
                       </ul>
                     </div>
                     <div class="menu_section">
