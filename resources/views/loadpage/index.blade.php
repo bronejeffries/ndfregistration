@@ -134,7 +134,7 @@
                                           Registration Open
                             </a>
                             <form  id="form-{{ $ekn->id }}" action="{{ route('participants.create') }}" method="get">
-                                    <input type="hidden" value="{{ $ekn->id }}" name="ekn_d">
+                                    <input type="hidden" value="{{ $ekn->getRouteKey() }}" name="ekn_d">
                             </form>
                             @else
                                 <p>Registration for Ekisaakate {{ $ekn->description }} {{ $ekn->activeyear->name }} is <span class="font-weight-bold btn btn-danger">Closed</span></p>

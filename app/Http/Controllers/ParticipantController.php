@@ -48,8 +48,7 @@ class ParticipantController extends Controller
             'ekn_d'=>'required|integer'
         ]);
 
-        $ekisakaate = Ekisakaate::find(request()->ekn_d);
-
+        $ekisakaate = (new Ekisakaate())->resolveRouteBinding(request()->ekn_d);
         return view('participant.create',compact('ekisakaate'));
 
     }

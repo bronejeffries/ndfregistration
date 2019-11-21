@@ -51,7 +51,7 @@
                               <tr>
                                   <td>
                                      <a href="{{ route('ekns.show',[$ekn]) }}"> {{ $ekn->name }} {{ $ekn->description }}</a>
-                                    </td>
+                                  </td>
                                   <td>{{ $ekn->venue }}</td>
                                   <td>{{ $ekn->activeyear->name }}</td>
                                   <td>{{ Carbon\Carbon::parse($ekn->start_date)->format('d-M-Y') }}</td>
@@ -66,7 +66,7 @@
                                           Registration Form
                                         </a>
                                         <form  id="form-{{ $ekn->id }}" action="{{ route('participants.create') }}" method="get">
-                                                <input type="hidden" value="{{ $ekn->id }}" name="ekn_d">
+                                                <input type="hidden" value="{{ $ekn->getRouteKey() }}" name="ekn_d">
                                         </form>
                                         @else
                                         Registration Form

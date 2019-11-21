@@ -45,7 +45,7 @@
                                             Registration Form
                                           </a>
                                           <form  id="form-regForm" action="{{ route('participants.create') }}" method="get">
-                                                  <input type="hidden" value="{{ $ekisakaate->id }}" name="ekn_d">
+                                                  <input type="hidden" value="{{ $ekisakaate->getRouteKey() }}" name="ekn_d">
                                           </form>
                                       {{-- </button> --}}
                                 </li>
