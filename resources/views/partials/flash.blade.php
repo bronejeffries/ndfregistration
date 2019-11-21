@@ -28,3 +28,13 @@
         <strong><i class="fa fa-info-circle"></i></strong> {{ session()->get('denied access') }}
 </div>
 @endif
+
+@if ($errors->any())
+<div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <p>
+                <strong><i class="fa fa-info-circle fa-2x"></i></strong> Sorry, the information you provided unfortunately is not as required.
+                Please check through the form for the provided corrections and re-submit. <br> Thank you.
+        </p>
+</div>
+@endif

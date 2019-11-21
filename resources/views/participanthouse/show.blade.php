@@ -49,7 +49,7 @@
                     </div>
                     <div class="x_content">
                       <br />
-                      <table id="" class="table table-striped table-bordered">
+                      <table class="example table table-striped table-bordered">
                             <thead>
                               <tr>
                                 <th>#</th>
