@@ -60,6 +60,7 @@
                                 <th>School</th>
                                 <th>Residence</th>
                                 <th>Religion</th>
+                                <th>Ekisakaate</th>
                                 <th></th>
                               </tr>
                             </thead>
@@ -76,9 +77,10 @@
                                         {{ $participant->residence }}
                                     </td>
                                     <td>{{ $participant->religion }}</td>
+                                    <td>{{ $participant->ekn->description }} {{ $participant->ekn->activeyear->name }}</td>
                                     <td>
                                         <a class="btn btn-primary" href="{{ route('participants.show',[$participant]) }}">
-                                            <i class="fa fa-eye"></i> view
+                                            <i class="fa fa-eye"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -118,7 +120,7 @@
                                               <div class="image view view-first">
                                                 <img style="width: 100%; display: block;" src="{{ asset('storage/'.$participantArchive->image_name) }}" alt="image" />
                                                 <div class="mask">
-                                                  <p>{{ $participantArchive->getRouteKey() }}</p>
+                                                  <span>{{ $participantArchive->getRouteKey() }}</span>
                                                   <div class="tools tools-bottom">
                                                     <a href="{{ route('participants.show',[$participantArchive]) }}"><i class="fa fa-link"></i></a>
                                                   </div>

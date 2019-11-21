@@ -67,7 +67,7 @@
                             Guest
                         </a>
                             <ul class="dropdown">
-                                <li><a href="{{ route('login') }}"> <i class="fa fa-tachometer"></i>Login</a></li>
+                                <li><a href="{{ route('login') }}"> <i class="fa fa-sign-in"></i> Login</a></li>
                             </ul>
                     </li>
                     @else
@@ -76,7 +76,17 @@
                         </a>
                             <ul class="dropdown">
                                 <li><a href="{{ route('dashboard') }}"> <i class="fa fa-tachometer"></i> Dashboard View</a></li>
-                                <li><a href="#"> <i class="fa fa-sign-out"></i> Logout</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                        <i class="fa fa-sign-out"></i> {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </li>
                             </ul>
                     </li>
                     @endguest

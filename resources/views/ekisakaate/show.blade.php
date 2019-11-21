@@ -23,14 +23,19 @@
                       <h2>{{ $ekisakaate->name }} {{ $ekisakaate->description }} participants <small>({{ $ekisakaate->status() }})</small></h2>
                       <ul class="nav navbar-right panel_toolbox">
                         <li>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#galleryModal">
                                     participants gallery
                                 </button>
                           </li>
                           <li>
-                                <a href="{{ route('participants.assignhouse',[$ekisakaate]) }}" class="btn btn-primary text-info">
+                                <a href="{{ route('participants.selecthouses',[$ekisakaate]) }}" class="btn btn-danger text-primary">
                                     Assign houses
                                 </a>
+                          </li>
+                          <li>
+                                <button class="btn btn-warning" data-toggle="modal" data-target="#lugandaLessonModal">
+                                        Luganda Lessons
+                                    </button>
                           </li>
                         @if ((bool)$ekisakaate->open)
                               <li>
@@ -88,7 +93,7 @@
                     </div>
                     <div class="x_content">
                       <br />
-                      <table id="" class="table table-striped table-bordered">
+                      <table id="" class="example table table-striped table-bordered">
                             <thead>
                               <tr>
                                 <th>#</th>
@@ -99,6 +104,7 @@
                                 <th>School</th>
                                 <th>Residence</th>
                                 <th>Religion</th>
+                                <th>House Assigned</th>
                                 <th>Payment Status</th>
                                 <th></th>
                               </tr>
@@ -116,10 +122,11 @@
                                         {{ $participant->residence }}
                                     </td>
                                     <td>{{ $participant->religion }}</td>
-                                    <td>{{ $participant->payment_status }}</td>
+                                    <td>{{ $participant->getHousename() }}</td>
+                                    <td> <strong> {{ $participant->payment_status }}</strong></td>
                                     <td>
                                         <a class="btn btn-primary" href="{{ route('participants.show',[$participant]) }}">
-                                            <i class="fa fa-eye"></i> view
+                                            <i class="fa fa-eye"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -134,7 +141,7 @@
 </div>
 
 {{-- gallery modal --}}
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bs-example-modal-lg" id="galleryModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
 
@@ -172,6 +179,74 @@
                                     </div>
 
                                     @endforeach
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+        </div>
+</div>
+
+{{-- Luganda Lessons modal --}}
+<div class="modal fade bs-example-modal-lg" id="lugandaLessonModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">Participants signed up for luganda lessons</h4>
+            </div>
+            <div class="modal-body">
+                    <div class="row">
+                            <div class="col-md-12">
+                              <div class="x_panel">
+
+                                <div class="x_content">
+
+                                  <div class="row">
+                                        <table id="" class="example table table-striped table-bordered">
+                                                <thead>
+                                                  <tr>
+                                                    <th>#</th>
+                                                    <th>Name</th>
+                                                    <th>Gender</th>
+                                                    <th>Age</th>
+                                                    <th>Class</th>
+                                                    <th>School</th>
+                                                    <th>Residence</th>
+                                                    <th>Religion</th>
+                                                    <th>House Assigned</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($participants as $key=>$luganda_participant)
+                                                        @if ((bool)$luganda_participant->luganda_classes)
+
+                                                        <tr>
+                                                                <td>{{ $key + 1 }}</td>
+                                                                <td>{{ $luganda_participant->name }} </td>
+                                                                <td>{{ $luganda_participant->gender }}</td>
+                                                                <td>{{ $luganda_participant->age }}</td>
+                                                                <td>{{ $luganda_participant->class }}</td>
+                                                                <td>{{ $luganda_participant->school }}</td>
+                                                                <td>
+                                                                    {{ $luganda_participant->residence }}
+                                                                </td>
+                                                                <td>{{ $luganda_participant->religion }}</td>
+                                                                <td>{{ $luganda_participant->getHousename() }}</td>
+                                                        </tr>
+
+                                                        @endif
+                                                    @endforeach
+                                                </tbody>
+                                              </table>
                                   </div>
                                 </div>
                               </div>

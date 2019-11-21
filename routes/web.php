@@ -23,8 +23,8 @@ Route::get('print_to_pdf/{participant}/','ParticipantController@generatePdf')->n
 Route::get('participant/payment/redirect','ParticipantController@paymentRedirect')->name('payment.redirect');
 Route::get('participant/{pesapalTrackingId}/payment/{pesapal_merchant_reference}/','ParticipantController@payment_message')->name('ekn.payment_msg');
 Route::patch('participant/conf/{participant}/payment','ParticipantController@confirmPayment')->name('payment.confirm')->middleware('auth');
-Route::get('ekn/{ekn}/participants/assign','ParticipanthouseController@assignToParticipants')->name('participants.assignhouse')->middleware('auth');
-
+Route::get('ekn/{ekn}/participants/assign','ParticipanthouseController@assignToParticipants')->name('participants.selecthouses')->middleware('auth');
+Route::post('ekn/participants/assign','ParticipanthouseController@assignHouses')->name('participants.assignhouses')->middleware('auth');
 Auth::routes();
 
 Route::get('/home', 'EkisakaateController@load')->name('home');

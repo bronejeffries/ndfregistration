@@ -494,8 +494,8 @@
 </div>
 
 {{-- summary graph modal --}}
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -506,11 +506,11 @@
                 <div class="x_panel">
                 <div class="x_content">
                         <div class="row">
-                            <div class="col-md-6">
-                                <button class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('p_type_').value='c'; document.getElementById('participantForm').submit(); ">Cash Payment</button>
+                            <div class="col-md-5">
+                                <button class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('p_type_').value='c'; document.getElementById('participantForm').submit(); ">Cash <br> Payment</button>
                             </div>
-                            <div class="col-md-6">
-                                    <button class="btn btn-default" disabled>Online Payment</button>
+                            <div class="col-md-5">
+                                    <button class="btn btn-default" disabled>Online <br> Payment</button>
                             </div>
                         </div>
                 </div>

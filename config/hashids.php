@@ -41,22 +41,22 @@ return [
 
         \App\Participant::class => [
             'salt' => \App\Participant::class.'7623e9b0009feff8e024a689d6ef59ce',
-            'length' => '10',
+            'length' => '25',
         ],
 
         \App\Ekisakaate::class => [
             'salt' => \App\Ekisakaate::class.'7623e9b0009feff8e024a689d6ef59ce',
-            'length' => '10',
+            'length' => '25',
         ],
 
         \App\Activeyear::class => [
             'salt' => \App\Activeyear::class.'7623e9b0009feff8e024a689d6ef59ce',
-            'length' => '10',
+            'length' => '25',
         ],
 
         \App\Participanthouse::class => [
             'salt' => \App\Participanthouse::class.'7623e9b0009feff8e024a689d6ef59ce',
-            'length' => '10',
+            'length' => '25',
         ],
 
         'main' => [

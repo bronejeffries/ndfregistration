@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ekisakaate;
+use App\Participant;
 use App\Participanthouse;
 use Illuminate\Http\Request;
 
@@ -50,8 +51,8 @@ class ParticipanthouseController extends Controller
             Participanthouse::create($new_house);
 
         } catch (\Throwable $th) {
-            throw $th;
-            // return back()->with('warning','Something Went Wrong');
+            // throw $th;
+            return back()->with('warning','Something Went Wrong');
 
         }
 
@@ -111,8 +112,47 @@ class ParticipanthouseController extends Controller
 
         $participantsToAssign = $ekisakaate->participants->where('house_id',null);
         $participanthouses = Participanthouse::all();
-
         return view('participanthouse.assign',compact('participantsToAssign','participanthouses'));
 
     }
+
+    public function assignHouses(Request $request)
+    {
+        $selected_houses = $request->houses_selected;
+
+        // $request->validate([
+        //     'houses_selected*'=>'integer'
+        // ]);
+
+        // dd($selected_houses);
+
+        $count = 0;
+        try {
+
+            foreach ($selected_houses as $participant => $house) {
+
+                if ($house!=null) {
+
+                    $count +=1;
+
+                   $thisParticipant = (new Participant())->resolveRouteBinding($participant);
+
+                   $thisParticipant->update([
+                        'house_id'=>((new Participanthouse())->resolveRouteBinding($house))->id
+                    ]);
+
+                }
+
+            }
+
+            return back()->with('success', $count." participant(s) have been assigned house(s) successfully " );
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            return back()->with('warning','Something Went Wrong');
+        }
+
+
+    }
+
 }

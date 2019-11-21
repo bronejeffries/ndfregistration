@@ -31,5 +31,11 @@ class Participant extends Model
         return $this->belongsTo(Participanthouse::class,'house_id');
     }
 
+    public function getHousename()
+    {
+        $house = $this->houseAttached;
+        return $house!=null?$house->name:"Not assisgned";
+    }
+
 
 }
