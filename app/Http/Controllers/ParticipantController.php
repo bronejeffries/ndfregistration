@@ -45,10 +45,10 @@ class ParticipantController extends Controller
         //
         // dd(request()->ekn_d);
         request()->validate([
-            'ekn_d'=>'required|integer'
+            'ekn_d'=>'required|string'
         ]);
-
-        $ekisakaate = (new Ekisakaate())->resolveRouteBinding(request()->ekn_d);
+        $ekn_id = request()->ekn_d;
+        $ekisakaate = (new Ekisakaate())->resolveRouteBinding($ekn_id);
         return view('participant.create',compact('ekisakaate'));
 
     }
