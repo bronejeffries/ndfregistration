@@ -6,6 +6,17 @@
     <div class="page-title">
       <div class="title_left">
         <h3>{{ $ekisakaate->name }} {{ $ekisakaate->description }}</h3>
+        <h5>
+            Total Registration fees paid: <strong>{{ $ekisakaate->getTotalRegistrationAmount() }}</strong>
+        </h5>
+        <h5>
+            Total Participation fees paid: <strong>{{ $ekisakaate->getTotalParticipationAmount() }}</strong>
+        </h5>
+
+        <h5>
+            Confirm pending payments <strong><a href="{{ route('ekns.getConfirm',[$ekisakaate])}}">here</a></strong>
+        </h5>
+
       </div>
 
       <div class="title_right">
@@ -105,13 +116,15 @@
                                 <th>Residence</th>
                                 <th>Religion</th>
                                 <th>House Assigned</th>
-                                <th>Payment Status</th>
+                                <th>Registration Status</th>
+                                <th>Ekn full fees</th>
                                 <th></th>
+                                <th>Comment</th>
                               </tr>
                             </thead>
                             <tbody>
                                 @foreach ($participants as $key=>$participant)
-                                <tr>
+                                <tr id="{{ $participant->getRouteKey() }}">
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $participant->name }} </td>
                                     <td>{{ $participant->gender }}</td>
@@ -124,11 +137,39 @@
                                     <td>{{ $participant->religion }}</td>
                                     <td>{{ $participant->getHousename() }}</td>
                                     <td> <strong> {{ $participant->payment_status }}</strong></td>
+                                    <td class="confirm">{{ $participant->participation_fees_paid }}</td>
                                     <td>
+                                        @if ($participant->hasFullyPaid()||(bool)$participant->isCleared)
+                                                cleared<i class="fa fa-check"></i>
+                                        @else
+                                        <ul class="nav navbar-right">
+
+                                                  <li class="dropdown">
+                                                    <button class="dropdown-toggle btn btn-info text-info btn-outline-info" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench fa-1x"></i></button>
+                                                    <ul class="dropdown-menu" role="menu">
+
+                                                        <li>
+                                                            <a href="#" class="j_a btn btn-info" data-participant="{{ $participant->getRouteKey() }}" data-toggle="modal" data-target="#paymentModal" >
+                                                                <i class="fa fa-check">
+                                                                </i>
+                                                                   Make Payment
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="j_a btn btn-success" data-participant="{{ $participant->getRouteKey() }}" data-toggle="modal" data-target="#clearModal">
+                                                                <i class="fa fa-check"></i>
+                                                                 Mark Cleared
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                  </li>
+                                              </ul>
+                                        @endif
                                         <a class="btn btn-primary" href="{{ route('participants.show',[$participant]) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </td>
+                                    <td class="reason">{{ $participant->reason }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -148,7 +189,7 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
               </button>
-              <h4 class="modal-title" id="myModalLabel">Participants</h4>
+              <h4 class="modal-title" id="myModalLabelGallery">Participants</h4>
             </div>
             <div class="modal-body">
                     <div class="row">
@@ -201,7 +242,7 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
               </button>
-              <h4 class="modal-title" id="myModalLabel">Participants signed up for luganda lessons</h4>
+              <h4 class="modal-title" id="myModalLabelLuganda">Participants signed up for luganda lessons</h4>
             </div>
             <div class="modal-body">
                     <div class="row">
@@ -255,6 +296,110 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+        </div>
+</div>
+
+{{-- payment modal --}}
+<div class="modal fade bs-example-modal-sm" id="paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabelPayment">Make Payment</h4>
+            </div>
+            <div class="modal-body">
+                    <div class="row">
+                            <div class="col-md-12">
+                              <div class="x_panel">
+
+                                <div class="x_content">
+                                        <div id="demo-form2-loader" style="display:none;" class="modal_loader"></div>
+                                  <div class="row">
+                                        <form id="demo-form2"  method="POST" action="{{ route('ekns.makePendingPayment') }}" data-parsley-validate class="j form-horizontal form-label-left">
+                                                @csrf
+                                                <input type="hidden" name="participant_selected">
+                                                <div class="form-group">
+
+                                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="amount">Amount<span class="required">*</span>
+                                                  </label>
+                                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input type="number" id="amount" name="amount" required class="form-control col-md-7 col-xs-12">
+                                                </div>
+                                                </div>
+                                                <div class="ln_solid"></div>
+                                                <div class="form-group">
+                                                  <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                  </div>
+                                                </div>
+                                        </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default cl" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+        </div>
+</div>
+
+{{-- clear modal --}}
+<div class="modal fade bs-example-modal-sm" id="clearModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">Confirm</h4>
+            </div>
+            <div class="modal-body">
+                    <div class="row">
+                            <div class="col-md-12">
+
+                              <div class="x_panel">
+
+                                <div class="x_content">
+
+                                    <div id="demo-form-loader" style="display:none;" class="modal_loader"></div>
+
+                                  <div class="row">
+                                        <form id="demo-form"  method="POST" action="{{ route('ekns.makePendingPayment') }}" data-parsley-validate class="j form-horizontal form-label-left">
+                                                @csrf
+                                                <input type="hidden" name="participant_selected">
+                                                <input type="hidden" name="clear" value=1>
+                                                <div class="form-group">
+                                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="reason">Reason<span class="required">*</span>
+                                                  </label>
+                                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <textarea id="reason" name="reason" required class="form-control col-md-7 col-xs-12">
+                                                    </textarea>
+                                                </div>
+                                                </div>
+                                                <div class="ln_solid"></div>
+                                                <div class="form-group">
+                                                  <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                  </div>
+                                                </div>
+                                        </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default cl" data-dismiss="modal">Close</button>
             </div>
 
           </div>

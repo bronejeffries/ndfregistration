@@ -15,9 +15,28 @@ class Ekisakaate extends Model
 
     protected $attributes = [
         'name'=>'Ekisaakaate',
-        'open'=>1
+        'open'=>1,
+        "confirmed_participants"=>0
     ];
 
+    public function getTotalRegistrationAmount()
+    {
+        return (($this->confirmed_participants)*(Participant::REGISTRATION_AMOUNT));
+    }
+
+    public function getTotalParticipationAmount()
+    {
+        $total_amount = 0;
+        $confirmed_participants = $this->participants->where("payment_status","success");
+        foreach ($confirmed_participants as $key => $participant) {
+
+            $total_amount +=$participant->participation_fees_paid;
+
+        }
+
+        return $total_amount;
+
+    }
 
     public function activeyear()
     {

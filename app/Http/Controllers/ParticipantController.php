@@ -22,6 +22,7 @@ use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod;
 use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod_RSA_SHA1;
 use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod_HMAC_SHA1;
 use App\Http\Controllers\ApiHelpers\OAuthSignatureMethod_PLAINTEXT;
+use App\Http\Resources\ParticipantResource;
 
 class ParticipantController extends Controller
 {
@@ -194,6 +195,64 @@ class ParticipantController extends Controller
         //
     }
 
+    public function makeParticipationFeesPending(Request $request)
+    {
+       $participant = (new Participant())->resolveRouteBinding($request->participant_selected);
+       $current_amount_to_confirm = $participant->amount_to_confirm;
+       $participant->update([
+           'amount_to_confirm'=>($current_amount_to_confirm+(($request->amount)!=null?$request->amount:0)),
+           'pending_payment'=>(($request->clear)==null?1:0),
+           'isCleared'=>(($request->clear)!=null?$request->clear:0),
+           'reason'=>(($request->reason)!=null?$request->reason:"Confirmation Pending")
+       ]);
+       return response()->json(['code'=>1,'participant'=>(new ParticipantResource($participant))]);
+    }
+
+    public function getListPendingConfirmation(Ekisakaate $ekisakaate)
+    {
+
+        $paymentsToConfirm = $ekisakaate->participants->where('pending_payment',true);
+        return view('ekisakaate.pendingConfirmationList',compact('paymentsToConfirm','ekisakaate'));
+
+    }
+
+    public function confirmParticipationFeesPending(Request $request)
+    {
+        // dd($request->confirmations);
+        try {
+            foreach ($request->confirmations as $participant => $confirm_code) {
+
+                $thisparticipant = (new Participant())->resolveRouteBinding($participant);
+
+                if ($confirm_code==1) {
+
+                    $new_amount = $thisparticipant->participation_fees_paid + $thisparticipant->amount_to_confirm;
+                    $thisparticipant->update([
+                        'participation_fees_paid'=>$new_amount,
+                        'amount_to_confirm'=>0,
+                        'pending_payment'=>0,
+                        'reason'=>null
+                        ]);
+
+                }else {
+
+                    $thisparticipant->update([
+                        'amount_to_confirm'=>0,
+                        'pending_payment'=>0,
+                        'reason'=>null
+                        ]);
+
+                }
+
+            }
+        } catch (\Throwable $th) {
+            // throw $th;
+            return back()->with('warning','Something went wrong');
+        }
+        return back()->with('success','Payment(s) Confirmed Successfully');
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -221,6 +280,16 @@ class ParticipantController extends Controller
             'payment_status'=>"success"
             ]);
 
+        // update_ekisakaate
+        $ekisakaate = $participant->ekn;
+        $confirmed_participants = $ekisakaate->confirmed_participants;
+        $confirmed_participants += 1;
+
+        $ekisakaate->update([
+
+            'confirmed_participants'=>$confirmed_participants
+
+        ]);
             // dd($participant);
 
         return back()->with('success',"Payment has been successfully confirmed");

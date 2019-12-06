@@ -8,12 +8,16 @@ function showPage(){
 	var div = document.getElementById("myDiv");
 
 	if(loader!=null){
-		loader.style.display = "none";
-	}
+
+        loader.style.display = "none";
+
+    }
 
 	if(div!=null){
-  	div.style.display = "block";
-	}
+
+        div.style.display = "block";
+
+    }
 }
 
 function showFrame(){

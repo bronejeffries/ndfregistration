@@ -18,6 +18,8 @@ Route::resource('participants','ParticipantController');
 Route::resource('participanthouses','ParticipanthouseController')->middleware('auth');
 Route::resource('activeyears','ActiveyearController')->middleware('auth');
 Route::resource('ekns','EkisakaateController')->middleware('auth');
+Route::get('ekn/{ekn}/confirmpayments/latest','ParticipantController@getListPendingConfirmation')->name('ekns.getConfirm')->middleware('auth');
+Route::post('ekn/confirmpayments','ParticipantController@confirmParticipationFeesPending')->name('ekns.confirmpayment')->middleware('auth');
 Route::get('identification/{participant}/tag','MakeIDController@participantID')->name('tags.participant')->middleware('auth');
 Route::get('print_to_pdf/{participant}/','ParticipantController@generatePdf')->name('pdf.participant');
 Route::get('participant/payment/redirect','ParticipantController@paymentRedirect')->name('payment.redirect');
@@ -26,5 +28,4 @@ Route::patch('participant/conf/{participant}/payment','ParticipantController@con
 Route::get('ekn/{ekn}/participants/assign','ParticipanthouseController@assignToParticipants')->name('participants.selecthouses')->middleware('auth');
 Route::post('ekn/participants/assign','ParticipanthouseController@assignHouses')->name('participants.assignhouses')->middleware('auth');
 Auth::routes();
-
 Route::get('/home', 'EkisakaateController@load')->name('home');

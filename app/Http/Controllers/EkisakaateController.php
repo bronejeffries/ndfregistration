@@ -60,7 +60,8 @@ class EkisakaateController extends Controller
             'translation_version1'=>'required|string',
             'translation_version2'=>'required|string',
             'start_date'=>'required|date',
-            'end_date'=>'required|date'
+            'end_date'=>'required|date',
+            'participation_fees'=>'required|integer'
         ]);
 
         try {

@@ -107,6 +107,15 @@
                           </div>
                         </div>
 
+                        <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="participation_fees">Participation Amount<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <input type="number" id="participation_fees" name="participation_fees" value="{{ old('participation_fees') }}" required class="form-control col-md-7 col-xs-12">
+                                  <span class="text-danger" >{{ $errors->first('participation_fees') }}</span>
+                              </div>
+                        </div>
+
                         <div class="ln_solid"></div>
                         <div class="form-group">
                           <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

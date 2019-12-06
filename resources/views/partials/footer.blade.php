@@ -61,4 +61,5 @@
 
 <script src="{{ asset('assets/scripts/tablejs.js') }}"></script>
 <script src="{{ asset('assets/scripts/loaderjs.js') }}"></script>
+<script src="{{ asset('assets/scripts/submitjs.js') }}"></script>
 

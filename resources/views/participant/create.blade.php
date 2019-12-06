@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="form-group">
 
-                                    <label for="class" class="control-label col-md-3 col-sm-3">Class</label>
+                                    <label for="class" class="control-label col-md-3 col-sm-3">Class/Grade</label>
                                     <div class="col-md-6 col-sm-6">
                                     <input id="class" class="form-control col-md-7 col-xs-12" required type="text" value="{{ old('class') }}" name="class">
                                     <span class="text-danger">{{ $errors->first('class') }}</span>
@@ -179,92 +179,95 @@
                                 <span class="section">EKISAAKAATE KYA NNABAGEREKA ATTENDANCE</span>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-9 col-sm-9">Is this the participant’s first time to attend the Ekisaakaate Kya Nnabagereka?(Yes/No) <span class="required">*</span>
+                                    <div id="years" class="form-group" style="display:none">
+                                        <label class="control-label col-md-1 col-sm-1">
+                                            2007
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2007" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2008
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2008" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2009
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2009" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2010
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2010" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2011
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2011" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2012
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2012" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2013
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2013" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2014
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2014" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2015
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2015" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2016
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2016" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2017
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2017" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2018
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2018" class="form-control">
+                                        </div>
+                                        <label class="control-label col-md-1 col-sm-1">
+                                                2019
+                                        </label>
+                                        <div class="col-md-1 col-sm-1">
+                                        <input type="checkbox" name="years[]" value="2019" class="form-control">
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-md-9 col-sm-9">
+                                        Is this the participant’s first time to attend the Ekisaakaate Kya Nnabagereka?(Yes/No) <span class="required">*</span>
                                     </label>
                                     <div class="col-md-2 col-sm-2">
-                                    <input type="text" name="first_time" value="{{ old('first_time') }}" required class="form-control col-md-7 col-xs-12">
+                                    <select id="first_time" name="first_time" required class="form-control col-md-7 col-xs-12">
+                                        <option value="Yes" data-show=true data-target="years">Yes</option>
+                                        <option value="No" data-show=false data-target="years">No</option>
+                                    </select>
                                     <span class="text-danger">{{ $errors->first('first_time') }}</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <p>If no (Please tick the appropriate years)</p>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                        2007
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2007" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2008
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2008" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2009
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2009" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2010
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2010" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2011
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2011" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2012
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2012" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2013
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2013" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2014
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2014" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2015
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2015" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2016
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2016" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2017
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2017" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2018
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2018" class="form-control">
-                                    </div>
-                                    <label class="control-label col-md-1 col-sm-1">
-                                            2019
-                                    </label>
-                                    <div class="col-md-1 col-sm-1">
-                                    <input type="checkbox" name="years[]" value="2019" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -520,5 +523,25 @@
       </div>
     </div>
 </div>
+
+<script>
+
+document.getElementById('first_time').addEventListener('click',function(e){
+    Array.from(this.options).forEach(option=>{
+        if (option.selected) {
+
+            if (option.dataset.show=='true') {
+
+                document.getElementById(option.dataset.target).style.display="block"
+
+            }else{
+                document.getElementById(option.dataset.target).style.display="none"
+            }
+
+        }
+    })
+})
+
+</script>
 
 @endsection

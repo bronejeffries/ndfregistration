@@ -7,7 +7,7 @@
 <div class="" id="info-mation">
         <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
-                  <div class="x_panel" style="background:blue; padding:1%; color:white;">
+                  <div class="x_panel" style="border: 1px 1px 1px 1px solid black; background:#726fed; padding:1%; color:white;">
                       <div class="">
                         <h4 class="text-center" style="color:white;" >
                             <strong>
@@ -51,14 +51,15 @@
                                 <h6 style="color:white;" class=" text-center dark text-uppercase"><strong>muyizi</strong></h6>
                             </div>
                     </div>
-                    <div class="form-group row mt-5 justify-content-center">
-                            <div class="text-center col-md-6 col-sm-6 py-0 col-md-offset-3">
-                                    <h5 style="color:white;" class="text-center"><strong>Sazza.......</strong></h5>
-                            </div>
+                    <div class="form-group py-1 row mt-5 justify-content-center">
+                            {{-- <div class="text-center col-md-6 col-sm-6 py-2 col-md-offset-3"> --}}
+                                    <h5 class="text-center"><strong style="color:black;">Sazza</strong></h5>
+                                    <h6 class="text-center" style="color:black; background:white;"><strong>.............</strong></h6>
+                            {{-- </div> --}}
                     </div>
                     <div class="form-group row mt-5 justify-content-center">
                             <div class="text-center col-md-6 col-sm-6 py-0 col-md-offset-3">
-                                    <h5 style="color:white;" class="text-center"><strong>Laba, Yiga, Kola</strong></h5>
+                                    <h4 style="color:white;" class="text-center"><strong>Laba, Yiga, Kola</strong></h4>
                             </div>
                     </div>
                 </div>
