@@ -27,7 +27,7 @@ class AddFullFeesColumn extends Migration
 
         Schema::table('ekisakaates', function (Blueprint $table) {
             //
-            $table->integer("participation_fees")->nullable(false);
+            $table->integer("participation_fees")->nullable(false)->default(0);
             $table->integer("confirmed_participants")->nullable(false)->default(0);
 
         });
