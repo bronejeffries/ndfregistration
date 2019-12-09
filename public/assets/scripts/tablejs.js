@@ -5,8 +5,8 @@ $(document).ready(function() {
         example_table.DataTable( {
             dom: 'Bfrtip',
             lengthMenu: [
-                [ 10, 25, 50, -1 ],
-                [ '10 rows', '25 rows', '50 rows', 'Show all' ]
+                [ 15, 25, 50, -1 ],
+                [ '15 rows', '25 rows', '50 rows', 'Show all' ]
             ],
             buttons: [
                 'copyHtml5',
@@ -14,7 +14,16 @@ $(document).ready(function() {
                 'csvHtml5',
                 'pdfHtml5',
                 'pageLength',
-                'print',
+                {
+                    extend: 'print',
+                    customize: function ( win ) {
+                        $(win.document.body)
+                            .css( 'font-size', '8pt' )
+                        $(win.document.body).find( 'table' )
+                            .addClass( 'compact' )
+                            .css( 'font-size', 'inherit' );
+                    }
+                },
             ]
         } );
 
@@ -22,9 +31,7 @@ $(document).ready(function() {
 
     var example_table = $('.example')
     if (example_table!=null) {
-
         makeDatatable(example_table)
-
     }
 
 } );
