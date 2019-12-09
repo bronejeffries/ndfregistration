@@ -93,6 +93,9 @@
                                         @method('DELETE')
                                 </form>
                               </li>
+                              <li>
+                                <a class="btn btn-sm btn-info " href="{{ route('ekns.edit',[$ekisakaate]) }}"> <i class="fa fa-pencil"></i> Edit</a>
+                              </li>
                             </ul>
                           </li>
                         <li><a id="closeup" class="collapse-link"><i class="fa fa-chevron-up"></i></a>

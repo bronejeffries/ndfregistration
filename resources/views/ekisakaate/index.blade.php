@@ -72,6 +72,7 @@
                                         Registration Form
                                         @endif
                                       </button>
+                                      <a class="btn btn-sm btn-info " href="{{ route('ekns.edit',[$ekn]) }}"> <i class="fa fa-pencil"></i> Edit</a>
                                   </td>
                               </tr>
                               @endforeach

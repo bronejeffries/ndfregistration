@@ -66,6 +66,7 @@ class EkisakaateController extends Controller
 
         try {
             Ekisakaate::create($new_ekn_data);
+
         } catch (\Throwable $th) {
             //throw $th;
             return back()->with('warning','Something went wrong');
@@ -98,6 +99,8 @@ class EkisakaateController extends Controller
     public function edit(Ekisakaate $ekisakaate)
     {
         //
+        $c_years = Activeyear::latest()->get();
+        return view('ekisakaate.edit',compact('ekisakaate','c_years'));
     }
 
     /**
@@ -111,10 +114,36 @@ class EkisakaateController extends Controller
     {
         //
 
+        if ($request->open) {
+
             $update_data = $request->validate([
-                            'open'=>'required|integer'
-                            ]);
-            $ekisakaate->update($update_data);
+                'open'=>'required|integer'
+                ]);
+        }else {
+
+            $update_data = $request->validate([
+                'description'=>'required|string',
+                'venue'=>'required|string',
+                'activeyear_id'=>'required|integer',
+                'theme'=>'required|string',
+                'translation_version1'=>'required|string',
+                'translation_version2'=>'required|string',
+                'start_date'=>'required|date',
+                'end_date'=>'required|date',
+                'participation_fees'=>'required|integer'
+            ]);
+
+        }
+
+            try {
+
+                $ekisakaate->update($update_data);
+
+            } catch (\Throwable $th) {
+                //throw $th;
+                return back()->with('warning','Something went wrong');
+
+            }
             return back()->with('success','Changes saved successfully');
     }
 
