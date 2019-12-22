@@ -1,87 +1,23 @@
 @extends('layouts.base')
 
 @section('content')
-@guest
-<div class="row">
-        <div class="col-md-1 col-sm-1 col-xs-12 form-group pull-right">
-                <div class="input-group">
-                  <span class="input-group-btn">
-                      <a class="btn btn-primary text-white" href="{{ route('home') }}">
-                        <i class="fa fa-times" ></i>
-                        Close</a>
-                  </span>
-                </div>
-        </div>
-</div>
-@else
+
 <div class="row page-title">
         <div class="title_left">
           <h3>REGISTRATION FORM</h3>
-        </div>
-        <div class="col-md-1 col-sm-1 col-xs-12 form-group">
-                <div class="input-group">
-                        <span class="input-group-btn">
-                            <a class="btn btn-success text-white" target="_blank" href="{{ route('tags.participant',[$participant]) }}">
-                            <i class="fa fa-paste" ></i>
-                            Generate Tag
-                            </a>
-                        </span>
-                      </div>
-        </div>
-        <div class="col-md-1 col-sm-1 col-xs-12 form-group pull-right">
-                <div class="input-group">
-                  <span class="input-group-btn">
-                      <a class="btn btn-danger text-white" onclick="event.preventDefault();
-                                                                    if(confirm('Are you sure you want to delete this Participant')){
-                                                                        document.getElementById('delete_form').submit();
-                                                                    }"
-                                                            href="#">
-                      <i class="fa fa-trash" ></i>
-                      remove
-                      </a>
-                      <form id="delete_form" action="{{ route('participants.destroy',[$participant]) }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                    </form>
-                  </span>
-                </div>
         </div>
         {{-- <div class="title_right"> --}}
           <div class="col-md-1 col-sm-1 col-xs-12 form-group pull-right">
             <div class="input-group">
               <span class="input-group-btn">
-                  <a class="btn btn-primary text-white" href="{{ route('ekns.show',[$participant->ekn]) }}">
-                        <i class="fa fa-times" ></i>
-                        Close
-                    </a>
+                  <a class="btn btn-primary text-white" href="{{ route('participants.show',[$participant]) }}">
+                    <i class="fa fa-times" ></i>
+                    Close</a>
               </span>
             </div>
           </div>
-          <div class="col-md-1 col-sm-1 col-xs-12 form-group pull-right">
-                <div class="input-group">
-                  <span class="input-group-btn">
-                        <a class="btn btn-success" href="{{ route('participants.edit',[$participant]) }}">
-                                <i class="fa fa-pencil"></i>
-                        </a>
-                  </span>
-                </div>
-        </div>
         {{-- </div> --}}
-        @if ($participant->isPending())
-        <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right">
-            <div class="input-group">
-                <form action="{{ route('payment.confirm',[$participant]) }}" method="POST">
-                    @csrf
-                    @method('PATCH')
-                    <button type="submit" class="btn btn-info">
-                            Confirm Payment
-                    </button>
-                </form>
-            </div>
-        </div>
-    @endif
 </div>
-@endguest
 <div class="clearfix"></div>
 
 <div class="animate-bottom bg-light" id="info-mation">
@@ -112,7 +48,9 @@
                          <h2 class="text-center">EKISAAKAATE KYA NNABAGEREKA {{ $participant->ekn->description }} {{ $participant->ekn->year }}</h2>
                          <h2 class="section text-center"> <strong> PARTICIPANT REGISTRATION FORM </strong></h2>
                       <!-- Tabs -->
-                          <form class="form-label-left" >
+                          <form class="form-label-left" action="{{ route('participants.update',[$participant]) }}" method="POST" >
+                            @csrf
+                            @method('PATCH')
                                <div class="form_wizard wizard_verticle">
 
                                 <div class="row" >
@@ -134,35 +72,49 @@
                                       <label class="control-label col-md-1 col-sm-1" for="first-name">Name
                                       </label>
                                       <div class="col-md-4 col-sm-4">
-                                      <input type="text" id="first-name" name="name" value="{{ $participant->name }}" disabled class="form-control pull-left col-md-7 col-xs-12">
-                                      </div>
+                                      <input type="text" id="first-name" name="name" value="{{ old('name') ?? $participant->name }}"  class="form-control pull-left col-md-7 col-xs-12">
+                                      <span class="text-danger">{{ $errors->first('name') }}</span>
+                                    </div>
                                       <label class="control-label col-md-1 col-sm-1">Gender</label>
                                       <div class="col-md-2 col-sm-2">
-                                              <input type="text" disabled value="{{ $participant->gender }}" class="form-control col-md-7 col-xs-12">
+                                        <select type="text"  name="gender" class="form-control col-md-7 col-xs-12">
+                                            <option value="male" {{ $participant->gender=="male"?"selected":"" }} >Male</option>
+                                            <option value="female" {{ $participant->gender=="female"?"selected":"" }}>Female</option>
+                                        </select>
+                                        <span class="text-danger">{{ $errors->first('gender') }}</span>
                                       </div>
                                       <label class="control-label col-md-1 col-sm-1">Age
                                       </label>
                                       <div class="col-md-1 col-sm-1">
-                                      <input disabled class="form-control col-md-7 col-xs-12" value="{{ $participant->age }}">
+                                        <input  class="form-control col-md-7 col-xs-12" name="age" value="{{ old('age')??$participant->age }}">
+                                        <span class="text-danger">{{ $errors->first('age') }}</span>
                                       </div>
                                       <label class="control-label col-md-1 col-sm-1">Class/Grade</label>
                                       <div class="col-md-1 col-sm-1">
-                                      <input class="form-control col-md-7 col-xs-12" type="text" value="{{ $participant->class }}" disabled name="class">
+                                        <input class="form-control col-md-7 col-xs-12" type="text" value="{{ old('class')??$participant->class }}"  name="class">
+                                        <span class="text-danger">{{ $errors->first('class') }}</span>
                                       </div>
                                   </div>
 
                                   <div class="form-group row ">
                                       <label class="control-label col-md-1 col-sm-1">School</label>
                                       <div class="col-md-4 col-sm-4">
-                                      <input class="form-control col-md-7 col-xs-12" value="{{ $participant->school }}" disabled type="text">
+                                          <input class="form-control col-md-7 col-xs-12" name="school" value="{{ old('school')??$participant->school }}"  type="text">
+                                          <span class="text-danger">{{ $errors->first('school') }}</span>
                                       </div>
                                       <label class="control-label col-md-1 col-sm-1">Residence</label>
                                       <div class="col-md-3 col-sm-3">
-                                      <input class="form-control col-md-7 col-xs-12" disabled value="{{ $participant->residence }}" type="text">
+                                          <input class="form-control col-md-7 col-xs-12" name="residence" value="{{ old('residence')??$participant->residence }}" type="text">
+                                          <span class="text-danger">{{ $errors->first('residence') }}</span>
                                       </div>
                                       <label class="control-label col-md-1 col-sm-1">Religion</label>
                                       <div class="col-md-2 col-sm-2">
-                                      <input class="form-control col-md-7 col-xs-12" disabled value="{{ $participant->religion }}" type="text">
+                                        <select class="form-control col-md-7 col-xs-12" name="religion" value="{{ old('religion') }}" required id="religionSelect">
+                                            <option value="Anglican(Protestant)" {{ $participant->religion=="Anglican(Protestant)"?"selected":"" }}>Anglican(Protestant)</option>
+                                            <option value="Catholic" {{ $participant->religion=="Catholic"?"selected":"" }}>Catholic</option>
+                                            <option value="Moslem" {{ $participant->religion=="Moslem"?"selected":"" }}>Moslem</option>
+                                        </select>
+                                        <span class="text-danger">{{ $errors->first('religion') }}</span>
                                       </div>
                                   </div>
 
@@ -182,38 +134,12 @@
                                       <label class="control-label col-md-2 col-sm-2">Health Notes <span class="required">*</span>
                                       </label>
                                       <div class="col-md-5 col-sm-5">
-                                              <textarea name="health_notes" disabled class="form-control col-md-7 col-xs-12">
-                                                      {{ $participant->health_notes }}
+                                              <textarea name="health_notes"  class="form-control col-md-7 col-xs-12">
+                                                      {{ old('health_notes')??$participant->health_notes }}
                                               </textarea>
+                                              <span class="text-danger">{{ $errors->first('health_notes') }}</span>
                                       </div>
                                   </div>
-                              </div>
-                              <div class="row mt-md-3">
-                                  <span class="section">
-                                     <strong>
-                                          3.EKISAAKAATE KYA NNABAGEREKA ATTENDANCE
-                                      </strong>
-                                  </span>
-
-                                  <div class="form-group row">
-                                      <label class="control-label col-md-6 col-sm-6">Is this the participant’s first time to attend the Ekisaakaate Kya Nnabagereka?(Yes/No) <span class="required">*</span>
-                                      </label>
-                                      <div class="col-md-1 col-sm-1">
-                                      <input type="text" disabled class="form-control col-md-7 col-xs-12" value="{{ $participant->first_time }}">
-                                      </div>
-                                  </div>
-                                  @if ($participant->first_time=="Yes")
-                                    <div id="years" class="form-group">
-                                        @foreach ($years as $year)
-                                            <label class="control-label col-md-1 col-sm-1">
-                                                    {{ $year->name }}
-                                            </label>
-                                            <div class="col-md-1 col-sm-1">
-                                                    <input type="checkbox" name="years[]" value="{{ $year->name }}" class="form-control">
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                  @endif
                               </div>
                               <div class="row">
                                   <span class="section">
@@ -226,26 +152,30 @@
                                       <label class="control-label col-md-3 col-sm-3">Mother’s/Guardian’s Name:
                                       </label>
                                       <div class="col-md-3 col-sm-3">
-                                      <input type="text" value="{{ $participant->mother_name }}" class="form-control col-md-7 col-xs-12" disabled>
+                                          <input type="text" name="mother_name" value="{{ old('mother_name')?? $participant->mother_name }}" class="form-control col-md-7 col-xs-12" >
+                                          <span class="text-danger">{{ $errors->first('mother_name') }}</span>
                                       </div>
 
                                       <label class="control-label col-md-2 col-sm-2">Contact
                                       </label>
                                       <div class="col-md-4 col-sm-4">
-                                      <input type="text" disabled value="{{ $participant->mother_contact }}" class="form-control col-md-7 col-xs-12">
+                                          <input type="text" name="mother_contact" value="{{ old('mother_contact')??$participant->mother_contact }}" class="form-control col-md-7 col-xs-12">
+                                          <span class="text-danger">{{ $errors->first('mother_contact') }}</span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
                                           <label class="control-label col-md-3 col-sm-3">Father’s/Guardian’s Name:
                                           </label>
                                           <div class="col-md-3 col-sm-3">
-                                          <input type="text" name="father" value="{{ $participant->father_name }}" disabled class="form-control col-md-7 col-xs-12">
+                                              <input type="text" name="father_name" value="{{ old('father_name')??$participant->father_name }}"  class="form-control col-md-7 col-xs-12">
+                                              <span class="text-danger">{{ $errors->first('father_name') }}</span>
                                           </div>
 
                                           <label class="control-label col-md-2 col-sm-2">Contact
                                               </label>
                                           <div class="col-md-4 col-sm-4">
-                                          <input type="text" name="father_contact" disabled value="{{ $participant->father_contact }}" class="form-control col-md-7 col-xs-12">
+                                            <input type="text" name="father_contact"  value="{{ old('father_contact')??$participant->father_contact }}" class="form-control col-md-7 col-xs-12">
+                                            <span class="text-danger">{{ $errors->first('father_contact') }}</span>
                                           </div>
                                   </div>
                                   <p>
@@ -258,33 +188,36 @@
                                           <label class="control-label col-md-1 col-sm-1">Name:
                                           </label>
                                           <div class="col-md-3 col-sm-3">
-                                          <input type="text" name="emergency_contact_name" value="{{ $participant->emergency_contact_name }}" disabled class="form-control col-md-7 col-xs-12">
+                                          <input type="text" name="emergency_contact_name" value="{{ old('emergency_contact_name')??$participant->emergency_contact_name }}"  class="form-control col-md-7 col-xs-12">
+                                          <span class="text-danger">{{ $errors->first('emergency_contact_name') }}</span>
                                           </div>
 
                                           <label class="control-label col-md-1 col-sm-1">Contact
                                               </label>
                                           <div class="col-md-3 col-sm-3">
-                                          <input type="text" name="emergency_contact_tel" value="{{ $participant->emergency_contact_tel }}" disabled class="form-control col-md-7 col-xs-12">
+                                              <input type="text" name="emergency_contact_tel" value="{{ old('emergency_contact_tel')??$participant->emergency_contact_tel }}"  class="form-control col-md-7 col-xs-12">
+                                              <span class="text-danger">{{ $errors->first('emergency_contact_tel') }}</span>
                                           </div>
                                   </div>
                                   <div class="form-group row">
                                           <label class="control-label col-md-1 col-sm-1">Relationship
                                               </label>
                                               <div class="col-md-4 col-sm-4">
-                                              <input type="text" name="emergency_contact_relationship" disabled value="{{ $participant->emergency_contact_relationship }}" class="form-control col-md-7 col-xs-12">
+                                                  <input type="text" name="emergency_contact_relationship"  value="{{ old('emergency_contact_relationship')??$participant->emergency_contact_relationship }}" class="form-control col-md-7 col-xs-12">
+                                                  <span class="text-danger">{{ $errors->first('emergency_contact_relationship') }}</span>
                                               </div>
                                   </div>
                               </div>
                               <div class="row" >
                                   <span class="section"> <strong>5.ANY SPECIAL ISSUE/s YOU WANT TO BE ADDRESSED DURING EKISAAKAATE KYA NNABAGEREKA?</strong></span>
-
                                   <div class="form-group row">
                                           <label class="control-label col-md-2 col-sm-2">Special Notes
                                               </label>
                                               <div class="col-md-4 col-sm-4">
-                                              <textarea name="special_notes" disabled class="form-control col-md-7 col-xs-12">
-                                                      {{ $participant->specialNotes }}
-                                              </textarea>
+                                                <textarea name="specialNotes"  class="form-control col-md-7 col-xs-12">
+                                                        {{ old('specialNotes')??$participant->specialNotes }}
+                                                </textarea>
+                                                <span class="text-danger">{{ $errors->first('specialNotes') }}</span>
                                               </div>
                                   </div>
                               </div>
@@ -295,7 +228,8 @@
                                           <label class="control-label col-md-1 col-sm-1">Response
                                           </label>
                                           <div class="col-md-3 col-sm-3">
-                                          <input type="text" disabled name="response" value="{{ $participant->response }}" class="form-control col-md-7 col-xs-12">
+                                              <input type="text"  name="response" value="{{ old('response')??$participant->response }}" class="form-control col-md-7 col-xs-12">
+                                              <span class="text-danger">{{ $errors->first('response') }}</span>
                                           </div>
                                       </div>
                               </div>
@@ -340,65 +274,21 @@
                                                   <li>We offer Luganda classes for beginners daily from 9am-1pm at 20,000 Ugx per day. Are you interested in signing up your child
                                                          <div class="checkbox">
                                                               <label>
-                                                                      <input type="checkbox" disabled {{ (bool)$participant->luganda_classes?"checked":"" }} class="flat"> Yes
+                                                                      <input type="checkbox" name="luganda_classes" value=1  {{ (bool)$participant->luganda_classes?"checked":"" }} class="flat"> Yes
                                                               </label>
                                                          </div>
                                                          <div class="checkbox">
                                                               <label>
-                                                                      <input type="checkbox" disabled {{ (bool)$participant->luganda_classes?"":"checked" }} class="flat"> No
+                                                                      <input type="checkbox" name="luganda_classes" value=0  {{ (bool)$participant->luganda_classes?"":"checked" }} class="flat"> No
                                                               </label>
                                                          </div>
                                                   </li>
                                               </ul>
                                       </p>
-                                      <p>
-                                              <h4><strong>CONSCENT:</strong></h4>
-                                              <strong>
-                                                      I understand that no fees will be refunded unless a child is unable to participate due to an accident or illness per physician orders before Ekisaakaate. Children's’ photos and quotes may be used for publicity purposes. I give my consent for my child(ren) to part take in Ekisaakaate Kya Nnabagereka)
-                                                      <div class="checkbox">
-                                                              <label>
-                                                                      <input type="checkbox" disabled {{ (bool)$participant->conscent?"checked":"" }} class="flat"> I conscent
-                                                              </label>
-                                                      </div>
-                                                      <div class="form-group">
-                                                          <label>
-                                                                  Date:
-                                                          </label>
-
-                                                          <fieldset>
-                                                                  <div class="control-group">
-                                                                    <div class="controls">
-
-                                                                        <input type="date" value="{{ $participant->conscent_date }}" class="has-feedback-left" disabled>
-
-                                                                    </div>
-                                                                  </div>
-                                                          </fieldset>
-
-                                                      </div>
-                                                      I allow EKN counsellors to offer any professional assistance needed to my child and also do follow up sessions where need be.
-                                                      <div class="checkbox">
-                                                              <label>
-                                                                      <input disabled type="checkbox" {{ (bool)$participant->agree?"checked":"" }} class="flat"> I Agree
-                                                              </label>
-                                                      </div>
-                                                      <div class="form-group">
-                                                          <label>
-                                                                  Date:
-                                                          </label>
-
-                                                          <fieldset>
-                                                                  <div class="control-group">
-                                                                    <div class="controls">
-
-                                                                        <input type="date" value="{{ $participant->agree_date }}" class="has-feedback-left" disabled>
-
-                                                                    </div>
-                                                                  </div>
-                                                          </fieldset>
-
-                                                      </div>
-                                              </strong>
+                                      <p class="section">
+                                          <button type="submit" class="btn btn-success">
+                                              Save
+                                          </button>
                                       </p>
                                       <p class="section text-center">
                                             Ekisaakaatee {{ $participant->ekn->description }} {{ $participant->ekn->activeyear->name }} at {{ $participant->ekn->venue }}
@@ -414,14 +304,4 @@
 
     </div>
 </div>
-
-<div class="row mr-3" style="overflow:hidden;">
-    <div class="col-md-1 col-sm-1 col-xs-12 form-group">
-        <a class="btn btn-success text-white" target="_blank" href="{{ route('pdf.participant',[$participant]) }}">
-                      Print to pdf
-                      <i class="fa fa-paste" ></i>
-                    </a>
-        </div>
-</div>
-
 @endsection

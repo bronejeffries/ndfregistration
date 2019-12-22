@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Activeyear;
 use \PDF;
 use Throwable;
 use App\Ekisakaate;
@@ -48,9 +49,14 @@ class ParticipantController extends Controller
         request()->validate([
             'ekn_d'=>'required|string'
         ]);
+
         $ekn_id = request()->ekn_d;
+
         $ekisakaate = (new Ekisakaate())->resolveRouteBinding($ekn_id);
-        return view('participant.create',compact('ekisakaate'));
+
+        $years = Activeyear::latest()->get();
+
+        return view('participant.create',compact('ekisakaate','years'));
 
     }
 
@@ -128,11 +134,8 @@ class ParticipantController extends Controller
                 }else{
 
                     $message = "This payment will be verified at the office to complete the registration process.";
-
                     $newParticipant->update([
-
                         'isPaid'=>true,
-
                         ]);
 
             }
@@ -157,7 +160,8 @@ class ParticipantController extends Controller
     public function show(Participant $participant)
     {
         //
-        return view('participant.show',compact('participant'));
+        $years = Activeyear::latest()->get();
+        return view('participant.show',compact('participant','years'));
 
     }
 
@@ -181,6 +185,8 @@ class ParticipantController extends Controller
     public function edit(Participant $participant)
     {
         //
+        $years = Activeyear::latest()->get();
+        return view('participant.edit',compact('participant','years'));
     }
 
     /**
@@ -193,6 +199,45 @@ class ParticipantController extends Controller
     public function update(Request $request, Participant $participant)
     {
         //
+
+        try {
+
+            $participant_data = $request->validate([
+                'name'=>'required|string',
+                'gender'=>'required|string',
+                'age'=>'required|integer',
+                'class'=>'required|string',
+                'school'=>'required|string',
+                'residence'=>'required|string',
+                'religion'=>'required|string',
+                'image_name'=>'nullable|file|image',
+                'health_notes'=>'required|string',
+                'mother_name'=>'nullable|string',
+                'mother_contact'=>'nullable|string',
+                'father_name'=>'nullable|string',
+                'father_contact'=>'nullable|string',
+                'emergency_contact_name'=>'required|string',
+                'emergency_contact_tel'=>'required|string',
+                'emergency_contact_relationship'=>'required|string',
+                'specialNotes'=>'required|string',
+                'response'=>'required|string',
+                'luganda_classes'=>'required|integer',
+            ]);
+
+            $participant->update($participant_data);
+        } catch (ValidationException $th) {
+
+            //  dd($th);
+            throw $th;
+
+        }catch(Throwable $th){
+            return back()->with('warning','Something Went Wrong');
+            // dd($th);
+        }
+        $message = "Participant information updated successfully";
+        return redirect(route('participants.show',[$participant]))->with('info',$message);
+
+
     }
 
     public function makeParticipationFeesPending(Request $request)

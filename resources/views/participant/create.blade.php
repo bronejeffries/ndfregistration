@@ -145,8 +145,12 @@
                                 <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3">Religion</label>
                                         <div class="col-md-6 col-sm-6">
-                                        <input class="form-control col-md-7 col-xs-12" name="religion" value="{{ old('religion') }}" required type="text">
-                                        <span class="text-danger">{{ $errors->first('religion') }}</span>
+                                            <select class="form-control col-md-7 col-xs-12" name="religion" value="{{ old('religion') }}" required id="religionSelect">
+                                                <option value="Anglican(Protestant)">Anglican(Protestant)</option>
+                                                <option value="Catholic">Catholic</option>
+                                                <option value="Moslem">Moslem</option>
+                                            </select>
+                                            <span class="text-danger">{{ $errors->first('religion') }}</span>
                                         </div>
                                 </div>
 
@@ -177,95 +181,24 @@
                             <div id="step-33">
                                 <h2 class="StepTitle">3</h2>
                                 <span class="section">EKISAAKAATE KYA NNABAGEREKA ATTENDANCE</span>
-
                                 <div class="form-group">
                                     <div id="years" class="form-group" style="display:none">
-                                        <label class="control-label col-md-1 col-sm-1">
-                                            2007
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2007" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2008
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2008" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2009
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2009" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2010
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2010" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2011
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2011" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2012
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2012" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2013
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2013" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2014
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2014" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2015
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2015" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2016
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2016" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2017
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2017" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2018
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2018" class="form-control">
-                                        </div>
-                                        <label class="control-label col-md-1 col-sm-1">
-                                                2019
-                                        </label>
-                                        <div class="col-md-1 col-sm-1">
-                                        <input type="checkbox" name="years[]" value="2019" class="form-control">
-                                        </div>
+                                        @foreach ($years as $year)
+                                            <label class="control-label col-md-1 col-sm-1">
+                                                    {{ $year->name }}
+                                            </label>
+                                            <div class="col-md-1 col-sm-1">
+                                                    <input type="checkbox" name="years[]" value="{{ $year->name }}" class="form-control">
+                                            </div>
+                                        @endforeach
                                     </div>
                                     <label class="control-label col-md-9 col-sm-9">
                                         Is this the participant’s first time to attend the Ekisaakaate Kya Nnabagereka?(Yes/No) <span class="required">*</span>
                                     </label>
                                     <div class="col-md-2 col-sm-2">
                                     <select id="first_time" name="first_time" required class="form-control col-md-7 col-xs-12">
-                                        <option value="Yes" data-show=true data-target="years">Yes</option>
                                         <option value="No" data-show=false data-target="years">No</option>
+                                        <option value="Yes" data-show=true data-target="years">Yes</option>
                                     </select>
                                     <span class="text-danger">{{ $errors->first('first_time') }}</span>
                                     </div>
