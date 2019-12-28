@@ -197,8 +197,8 @@
                                     </label>
                                     <div class="col-md-2 col-sm-2">
                                     <select id="first_time" name="first_time" required class="form-control col-md-7 col-xs-12">
-                                        <option value="No" data-show=false data-target="years">No</option>
-                                        <option value="Yes" data-show=true data-target="years">Yes</option>
+                                        <option value="No" data-show=true data-target="years">No</option>
+                                        <option value="Yes" data-show=false data-target="years">Yes</option>
                                     </select>
                                     <span class="text-danger">{{ $errors->first('first_time') }}</span>
                                     </div>
@@ -443,7 +443,7 @@
                 <div class="x_content">
                         <div class="row">
                             <div class="col-md-5">
-                                <button class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('p_type_').value='c'; document.getElementById('participantForm').submit(); ">Cash <br> Payment</button>
+                                <button class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('p_type_').value='c'; runCheck(); ">Cash <br> Payment</button>
                             </div>
                             <div class="col-md-5">
                                     <button class="btn btn-default" disabled>Online <br> Payment</button>
@@ -477,4 +477,8 @@ document.getElementById('first_time').addEventListener('click',function(e){
 
 </script>
 
+@endsection
+@section('footerjs_extra')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{{ asset('assets/scripts/checkParticipant.js') }}"></script>
 @endsection

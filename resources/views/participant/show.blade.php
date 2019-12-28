@@ -70,13 +70,62 @@
         @if ($participant->isPending())
         <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right">
             <div class="input-group">
-                <form action="{{ route('payment.confirm',[$participant]) }}" method="POST">
+                <form id="confirmpayment" action="{{ route('payment.confirm',[$participant]) }}" method="POST">
                     @csrf
                     @method('PATCH')
-                    <button type="submit" class="btn btn-info">
+                    <input type="hidden" name="payment_reciept">
+                    <button type="button" data-toggle="modal" data-target="#recieptModal" class="btn btn-info">
                             Confirm Payment
                     </button>
                 </form>
+            </div>
+        </div>
+        {{-- payment modal --}}
+        <div class="modal fade bs-example-modal-sm" id="recieptModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabelPayment">Enter Reciept</h4>
+                </div>
+                <div class="modal-body">
+                        <div class="row">
+                                <div class="col-md-12">
+                                <div class="x_panel">
+
+                                    <div class="x_content">
+                                    <div class="row">
+                                            <form id="demo-form2" onsubmit="event.preventDefault();
+                                                                            document.getElementsByName('payment_reciept')[0].value=document.getElementById('reciept').value;
+                                                                            document.getElementById('confirmpayment').submit();"  method="POST" data-parsley-validate class="form-horizontal form-label-left">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="reciept">Reciept<span class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="text" id="reciept" name="payment_reciept" required class="form-control col-md-7 col-xs-12">
+                                                        </div>
+                                                    </div>
+                                                    <div class="ln_solid"></div>
+                                                    <div class="form-group">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                    </div>
+                                                    </div>
+                                            </form>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default cl" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
             </div>
         </div>
     @endif
@@ -202,7 +251,7 @@
                                       <input type="text" disabled class="form-control col-md-7 col-xs-12" value="{{ $participant->first_time }}">
                                       </div>
                                   </div>
-                                  @if ($participant->first_time=="Yes")
+                                  @if ($participant->first_time=="No")
                                     <div id="years" class="form-group">
                                         @foreach ($years as $year)
                                             <label class="control-label col-md-1 col-sm-1">

@@ -19,5 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('dashboard/summary/data',"AdminController@dashboardtitleApiSummary");
 Route::get('activeyear/{acytiveyear}/data',"ActiveyearController@show");
+Route::get('checkParticipant/{name}/exists',"ParticipantController@checkParticipantByName");
 Route::get('handleresponsePment/{pesapal_transaction_tracking_id}/{pesapal_merchant_reference}/clear',"ParticipantController@handlePaymentResponse");
 Route::post('participant/payment/make','ParticipantController@makeParticipationFeesPending')->name('ekns.makePendingPayment');

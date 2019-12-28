@@ -70,5 +70,11 @@ class Participant extends Model
 
     }
 
+    public function getGenderForDisplay()
+    {
+        $gendertoDisplay = $this->gender=="male"?"Male/boy":"Female/girl";
+        return $gendertoDisplay;
+    }
+
 
 }

@@ -20,6 +20,9 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
+                            <p class="text-right">
+                                    <a class="btn btn-primary" href="{{ route('ekns.show',$ekisakaate) }}"> Back</a>
+                            </p>
                       <div class="clearfix"></div>
                     </div>
                     <div class="x_content">

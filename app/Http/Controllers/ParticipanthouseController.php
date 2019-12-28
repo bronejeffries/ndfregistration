@@ -110,9 +110,9 @@ class ParticipanthouseController extends Controller
     public function assignToParticipants(Ekisakaate $ekisakaate)
     {
 
-        $participantsToAssign = $ekisakaate->participants->where('house_id',null);
+        $participantsToAssign = $ekisakaate->participants->where('house_id',null)->where("payment_status","success");
         $participanthouses = Participanthouse::all();
-        return view('participanthouse.assign',compact('participantsToAssign','participanthouses'));
+        return view('participanthouse.assign',compact('participantsToAssign','participanthouses','ekisakaate'));
 
     }
 

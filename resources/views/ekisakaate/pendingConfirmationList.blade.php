@@ -37,6 +37,9 @@
                                     <p>
                                         Confirm a payment of <strong>{{ $payment->amount_to_confirm }}</strong> made for <strong>{{ $payment->name }}</strong> as of {{ $payment->updated_at }}
                                     </p>
+                                    <p>
+                                        Participant reciepts: <strong>{{ $payment->participation_reciepts }} </strong>as of {{ $payment->updated_at }}
+                                    </p>
                                 </div>
                                 <div class="col-md-2">
                                         <select class="form-control" name="confirmations[{{ $payment->getRouteKey() }}]">

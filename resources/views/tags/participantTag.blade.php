@@ -54,7 +54,7 @@
                     <div class="form-group py-1 row mt-5 justify-content-center">
                             {{-- <div class="text-center col-md-6 col-sm-6 py-2 col-md-offset-3"> --}}
                                     <h5 class="text-center"><strong style="color:black;">Sazza</strong></h5>
-                                    <h6 class="text-center" style="color:black; background:white;"><strong>.............</strong></h6>
+                                    <h6 class="text-center" style="color:black; background:white; text-decoration:underline;"><strong>{{ $participant->getHousename() }}</strong></h6>
                             {{-- </div> --}}
                     </div>
                     <div class="form-group row mt-5 justify-content-center">

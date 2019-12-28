@@ -119,7 +119,7 @@
                                 <th>Residence</th>
                                 <th>Religion</th>
                                 <th>House Assigned</th>
-                                <th>Registration Status</th>
+                                <th>Registration</th>
                                 <th>Ekn full fees</th>
                                 <th></th>
                                 <th>Comment</th>
@@ -129,8 +129,12 @@
                                 @foreach ($participants as $key=>$participant)
                                 <tr id="{{ $participant->getRouteKey() }}">
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $participant->name }} </td>
-                                    <td>{{ $participant->gender }}</td>
+                                    <td>
+                                        <a href="{{ route('participants.show',[$participant]) }}">
+                                                {{ $participant->name }}
+                                        </a>
+                                     </td>
+                                    <td>{{ $participant->getGenderForDisplay() }}</td>
                                     <td>{{ $participant->age }}</td>
                                     <td>{{ $participant->class }}</td>
                                     <td>{{ $participant->school }}</td>
@@ -139,40 +143,39 @@
                                     </td>
                                     <td>{{ $participant->religion }}</td>
                                     <td>{{ $participant->getHousename() }}</td>
-                                    <td> <strong> {{ $participant->payment_status }}</strong></td>
+                                    <td> <strong> {{ ((bool)$participant->isPending())?$participant->payment_status:$participant->registration_reciept }}</strong></td>
                                     <td class="confirm">{{ $participant->participation_fees_paid }}</td>
                                     <td>
                                         @if ($participant->hasFullyPaid()||(bool)$participant->isCleared)
-                                                cleared<i class="fa fa-check"></i>
+                                                {{ $participant->participation_reciepts }}
                                         @else
-                                        <ul class="nav navbar-right">
+                                            <ul class="nav navbar-right">
 
-                                                  <li class="dropdown">
-                                                    <button class="dropdown-toggle btn btn-info text-info btn-outline-info" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench fa-1x"></i></button>
-                                                    <ul class="dropdown-menu" role="menu">
+                                                    <li class="dropdown">
+                                                        <button class="dropdown-toggle btn btn-info text-info btn-outline-info" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench fa-1x"></i></button>
+                                                        <ul class="dropdown-menu" role="menu">
 
-                                                        <li>
-                                                            <a href="#" class="j_a btn btn-info" data-participant="{{ $participant->getRouteKey() }}" data-toggle="modal" data-target="#paymentModal" >
-                                                                <i class="fa fa-check">
-                                                                </i>
-                                                                   Make Payment
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="j_a btn btn-success" data-participant="{{ $participant->getRouteKey() }}" data-toggle="modal" data-target="#clearModal">
-                                                                <i class="fa fa-check"></i>
-                                                                 Mark Cleared
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                  </li>
-                                              </ul>
+                                                            <li>
+                                                                <a href="#" class="j_a btn btn-info" data-participant="{{ $participant->getRouteKey() }}" data-toggle="modal" data-target="#paymentModal" >
+                                                                    <i class="fa fa-check">
+                                                                    </i>
+                                                                    Make Payment
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="j_a btn btn-success" data-participant="{{ $participant->getRouteKey() }}" data-toggle="modal" data-target="#clearModal">
+                                                                    <i class="fa fa-check"></i>
+                                                                    Mark Cleared
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                            </ul>
                                         @endif
-                                        <a class="btn btn-primary" href="{{ route('participants.show',[$participant]) }}">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
                                     </td>
-                                    <td class="reason">{{ $participant->reason }}</td>
+                                    <td class="reason">
+                                        {{ $participant->reason }}
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -327,12 +330,18 @@
                                                 @csrf
                                                 <input type="hidden" name="participant_selected">
                                                 <div class="form-group">
-
                                                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="amount">Amount<span class="required">*</span>
                                                   </label>
                                                   <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <input type="number" id="amount" name="amount" required class="form-control col-md-7 col-xs-12">
+                                                  </div>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="reciept">Reciept<span class="required">*</span>
+                                                    </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                      <input type="text" id="reciept" name="payment_reciept" required class="form-control col-md-7 col-xs-12">
+                                                    </div>
                                                 </div>
                                                 <div class="ln_solid"></div>
                                                 <div class="form-group">
