@@ -53,17 +53,51 @@
                             @method('PATCH')
                                <div class="form_wizard wizard_verticle">
 
+                                <div class="row mt-3">
+
+                                    <span class="section">
+                                        <strong>
+                                            1.PARTICIPANT PAYMENT DETAILS
+                                        </strong>
+
+                                    </span>
+
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-2 col-sm-2">Ekns Full Fees Paid <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-5 col-sm-5">
+                                                <input type="number" name="participation_fees_paid" value="{{ $participant->participation_fees_paid }}"  class="form-control col-md-7 col-xs-12" />
+                                                <span class="text-danger">{{ $errors->first('participation_fees_paid') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-2 col-sm-2">Participation fees reciepts<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-5 col-sm-5">
+                                                <input type="text" name="participation_reciepts" value="{{ $participant->participation_reciepts }}"  class="form-control col-md-7 col-xs-12" />
+                                                <span class="text-danger">{{ $errors->first('participation_reciepts') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-2 col-sm-2">Registration fees reciept <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-5 col-sm-5">
+                                                <input type="text" name="registration_reciept" value="{{ $participant->registration_reciept }}"  class="form-control col-md-7 col-xs-12" />
+                                                <span class="text-danger">{{ $errors->first('registration_reciept') }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row" >
                                   <span class="section">
                                       <strong>
-                                          1.PARTICIPANT'S INFORMATION
+                                          2.PARTICIPANT'S INFORMATION
                                       </strong>
-
                                   </span>
                                   <div class="form-group row">
                                       {{-- <div class="pull-right col-md-4"> --}}
                                           <div class="pull-right col-md-3 col-sm-3">
-                                              <img src="{{ asset('storage/'.$participant->image_name) }}" style="width:120px; height:120px;" alt="photo" class="img-thumbnail profile_img">
+                                              <img src="{{ asset('storage/'.$participant->image_name) }}" style="width:130px; height:120px;" alt="photo" class="img-thumbnail profile_img">
                                           </div>
                                           {{-- <label class="control-label col-md-2 col-sm-2">Photo</label> --}}
                                       {{-- </div> --}}
@@ -124,7 +158,7 @@
 
                                   <span class="section">
                                       <strong>
-                                          2.PARTICIPANT HEALTH CHECK
+                                          3.PARTICIPANT HEALTH CHECK
                                       </strong>
 
                                   </span>
@@ -257,7 +291,6 @@
                                               </ul>
                                               (All payments must be receipted) Please return the office copy of the bank slip after payment to the registration centers.
                                       </p>
-
 
                                       <p>
                                               <h4><strong>REQUIREMENTS (PLEASE LABEL ALL PROPERTY)</strong></h4>

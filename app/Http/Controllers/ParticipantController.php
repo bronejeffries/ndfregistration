@@ -222,6 +222,9 @@ class ParticipantController extends Controller
                 'specialNotes'=>'required|string',
                 'response'=>'required|string',
                 'luganda_classes'=>'required|integer',
+                'participation_fees_paid'=>'required|integer',
+                'participation_reciepts'=>'required|string',
+                'registration_reciept'=>'required|string'
             ]);
 
             $participant->update($participant_data);
@@ -247,11 +250,13 @@ class ParticipantController extends Controller
        $reciepts = $participant->participation_reciepts;
 
        if (($request->clear==null)&&$reciepts) {
+
            if ($request->payment_reciept) {
 
                $reciepts = ($participant->participation_reciepts).", ".($request->payment_reciept);
 
             }
+
        }
 
         $participant->update([
