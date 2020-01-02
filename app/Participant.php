@@ -25,6 +25,11 @@ class Participant extends Model
         return $this->REGISTRATION_AMOUNT;
     }
 
+    public function getParticipationBalance()
+    {
+        return (($this->getParticipationFees())-($this->participation_fees_paid));
+    }
+
     public function getParticipationFees()
     {
         return $this->ekn->participation_fees;
@@ -32,13 +37,7 @@ class Participant extends Model
 
     public function hasFullyPaid()
     {
-        return (
-                        (
-                            ($this->getParticipationFees())
-                                    -
-                            ($this->participation_fees_paid)
-                        )>=0
-                );
+        return (($this->getParticipationBalance())>=0);
     }
 
     public function ekn()

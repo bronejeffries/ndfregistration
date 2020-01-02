@@ -130,6 +130,7 @@
                                             <th>House Assigned</th>
                                             <th>Registration</th>
                                             <th>Ekn full fees</th>
+					    <th>Balance</th>
                                             <th></th>
                                             <th>Comment</th>
                                             </tr>
@@ -159,6 +160,7 @@
                                                 <td>{{ $participant->getHousename() }}</td>
                                                 <td> <strong> {{ ((bool)$participant->isPending())?$participant->payment_status:$participant->registration_reciept }}</strong></td>
                                                 <td class="confirm">{{ $participant->participation_fees_paid }}</td>
+                                                <td>{{ $participant->getParticipationBalance() }}</td>
                                                 <td>
                                                     @if ($participant->hasFullyPaid()||(bool)$participant->isCleared)
                                                             {{ $participant->participation_reciepts }}
