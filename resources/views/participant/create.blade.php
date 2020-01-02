@@ -148,7 +148,7 @@
                                             <select class="form-control col-md-7 col-xs-12" name="religion" value="{{ old('religion') }}" required id="religionSelect">
                                                 <option value="Anglican(Protestant)">Anglican(Protestant)</option>
                                                 <option value="Catholic">Catholic</option>
-                                                <option value="Moslem">Moslem</option>
+                                                <option value="Muslim">Muslim</option>
                                             </select>
                                             <span class="text-danger">{{ $errors->first('religion') }}</span>
                                         </div>
