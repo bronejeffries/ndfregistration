@@ -107,79 +107,96 @@
                     </div>
                     <div class="x_content">
                       <br />
-                      <table id="" class="example table table-striped table-bordered">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Gender</th>
-                                <th>Age</th>
-                                <th>Class</th>
-                                <th>School</th>
-                                <th>Residence</th>
-                                <th>Religion</th>
-                                <th>House Assigned</th>
-                                <th>Registration</th>
-                                <th>Ekn full fees</th>
-                                <th></th>
-                                <th>Comment</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($participants as $key=>$participant)
-                                <tr id="{{ $participant->getRouteKey() }}">
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>
-                                        <a href="{{ route('participants.show',[$participant]) }}">
-                                                {{ $participant->name }}
-                                        </a>
-                                     </td>
-                                    <td>{{ $participant->getGenderForDisplay() }}</td>
-                                    <td>{{ $participant->age }}</td>
-                                    <td>{{ $participant->class }}</td>
-                                    <td>{{ $participant->school }}</td>
-                                    <td>
-                                        {{ $participant->residence }}
-                                    </td>
-                                    <td>{{ $participant->religion }}</td>
-                                    <td>{{ $participant->getHousename() }}</td>
-                                    <td> <strong> {{ ((bool)$participant->isPending())?$participant->payment_status:$participant->registration_reciept }}</strong></td>
-                                    <td class="confirm">{{ $participant->participation_fees_paid }}</td>
-                                    <td>
-                                        @if ($participant->hasFullyPaid()||(bool)$participant->isCleared)
-                                                {{ $participant->participation_reciepts }}
-                                        @else
-                                            <ul class="nav navbar-right">
+                      <div class="row">
+                          <div class="col-md-12">
+                                <table id="" class="example table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Gender</th>
+                                            <th>Age</th>
+                                            <th>Class</th>
+                                            <th>School</th>
+                                            <th>Residence</th>
+                                            <th>Religion</th>
+                                            <th>Mother's Name</th>
+                                            <th>Mother's Contact</th>
+                                            <th>Father's Name</th>
+                                            <th>Father's Contact</th>
+                                            <th>Contact email</th>
+                                            <th>Emergency Contact name</th>
+                                            <th>Tel</th>
+                                            <th>House Assigned</th>
+                                            <th>Registration</th>
+                                            <th>Ekn full fees</th>
+                                            <th></th>
+                                            <th>Comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($participants as $key=>$participant)
+                                            <tr id="{{ $participant->getRouteKey() }}">
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>
+                                                    <a href="{{ route('participants.show',[$participant]) }}">
+                                                            {{ $participant->name }}
+                                                    </a>
+                                                </td>
+                                                <td>{{ $participant->getGenderForDisplay() }}</td>
+                                                <td>{{ $participant->age }}</td>
+                                                <td>{{ $participant->class }}</td>
+                                                <td>{{ $participant->school }}</td>
+                                                <td>{{ $participant->residence }}</td>
+                                                <td>{{ $participant->religion }}</td>
+                                                <td>{{ $participant->mother_name }}</td>
+                                                <td>{{ $participant->mother_contact }}</td>
+                                                <td>{{ $participant->father_name }}</td>
+                                                <td>{{ $participant->father_contact }}</td>
+                                                <td>{{ $participant->contact_email }}</td>
+                                                <td>{{ $participant->emergency_contact_name }}</td>
+                                                <td>{{ $participant->emergency_contact_tel }}</td>
+                                                <td>{{ $participant->getHousename() }}</td>
+                                                <td> <strong> {{ ((bool)$participant->isPending())?$participant->payment_status:$participant->registration_reciept }}</strong></td>
+                                                <td class="confirm">{{ $participant->participation_fees_paid }}</td>
+                                                <td>
+                                                    @if ($participant->hasFullyPaid()||(bool)$participant->isCleared)
+                                                            {{ $participant->participation_reciepts }}
+                                                    @else
+                                                        <ul class="nav navbar-right">
 
-                                                    <li class="dropdown">
-                                                        <button class="dropdown-toggle btn btn-info text-info btn-outline-info" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench fa-1x"></i></button>
-                                                        <ul class="dropdown-menu" role="menu">
+                                                                <li class="dropdown">
+                                                                    <button class="dropdown-toggle btn btn-info text-info btn-outline-info" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench fa-1x"></i></button>
+                                                                    <ul class="dropdown-menu" role="menu">
 
-                                                            <li>
-                                                                <a href="#" class="j_a btn btn-info" data-participant="{{ $participant->getRouteKey() }}" data-toggle="modal" data-target="#paymentModal" >
-                                                                    <i class="fa fa-check">
-                                                                    </i>
-                                                                    Make Payment
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="j_a btn btn-success" data-participant="{{ $participant->getRouteKey() }}" data-toggle="modal" data-target="#clearModal">
-                                                                    <i class="fa fa-check"></i>
-                                                                    Mark Cleared
-                                                                </a>
-                                                            </li>
+                                                                        <li>
+                                                                            <a href="#" class="j_a btn btn-info" data-participant="{{ $participant->getRouteKey() }}" data-toggle="modal" data-target="#paymentModal" >
+                                                                                <i class="fa fa-check">
+                                                                                </i>
+                                                                                Make Payment
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="j_a btn btn-success" data-participant="{{ $participant->getRouteKey() }}" data-toggle="modal" data-target="#clearModal">
+                                                                                <i class="fa fa-check"></i>
+                                                                                Mark Cleared
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
                                                         </ul>
-                                                    </li>
-                                            </ul>
-                                        @endif
-                                    </td>
-                                    <td class="reason">
-                                        {{ $participant->reason }}
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                          </table>
+                                                    @endif
+                                                </td>
+                                                <td class="reason">
+                                                    {{ $participant->reason }}
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+
+                          </div>
+                      </div>
                     </div>
                   </div>
                 </div>
