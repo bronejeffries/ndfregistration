@@ -206,7 +206,7 @@
 
 {{-- gallery modal --}}
 <div class="modal fade bs-example-modal-lg" id="galleryModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
           <div class="modal-content">
 
             <div class="modal-header">
@@ -259,7 +259,7 @@
 
 {{-- Luganda Lessons modal --}}
 <div class="modal fade bs-example-modal-lg" id="lugandaLessonModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
           <div class="modal-content">
 
             <div class="modal-header">
