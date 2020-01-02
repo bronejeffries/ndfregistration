@@ -37,7 +37,7 @@ class Participant extends Model
                             ($this->getParticipationFees())
                                     -
                             ($this->participation_fees_paid)
-                        )==0
+                        )>=0
                 );
     }
 
