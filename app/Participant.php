@@ -37,7 +37,7 @@ class Participant extends Model
 
     public function hasFullyPaid()
     {
-        return (($this->getParticipationBalance())>=0);
+        return (($this->getParticipationBalance())<=0);
     }
 
     public function ekn()
