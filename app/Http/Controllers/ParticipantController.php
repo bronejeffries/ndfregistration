@@ -131,7 +131,7 @@ class ParticipantController extends Controller
 
                     $message = "Participant registered with a cash payment detail";
 
-                }else{
+            }else{
 
                     $message = "This payment will be verified at the office to complete the registration process.";
                     $newParticipant->update([
