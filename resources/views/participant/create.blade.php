@@ -286,7 +286,7 @@
 
 
                                 <div class="form-group" >
-                                        <label class="control-label col-md-2 col-sm-2">Special Notes
+                                        <label class="control-label col-md-2 col-sm-2">Special Notes/Expectations
                                             </label>
                                             <div class="col-md-4 col-sm-4">
                                             <textarea name="specialNotes" required class="form-control col-md-7 col-xs-12">
@@ -312,7 +312,7 @@
                             <div id="step-77">
                                     <h2 class="StepTitle">7</h2>
                                     <span class="section">PARENT’S/GUARDIAN’S INFORMATION.</span>
-                                    <p>
+                                    {{-- <p>
                                         <h4><strong>EKN FEES: 352,200/= (Three hundred fifty two thousand two hundred shillings only)</strong></h4>
                                         <h5><strong>Breakdown:</strong></h5>
                                         <ul>
@@ -321,9 +321,9 @@
                                                 <li>EKN Uniform Fee: 40,000/=</li>
                                                 <li>Bank Charges: 2,200/=</li>
                                         </ul>
-                                    </p>
+                                    </p> --}}
 
-                                    <p>
+                                    {{-- <p>
                                             <h4><strong>PAYMENTS MUST BE MADE  USING A PAYSLIP</strong></h4>
 
                                             <ul>
@@ -333,7 +333,22 @@
 
                                             </ul>
                                             (All payments must be receipted) Please return the office copy of the bank slip after payment to the registration centers.
-                                    </p>
+                                    </p> --}}
+                                    <p>
+                                        <h4><strong>PAYMENTS MUST BE MADE USING AIRTEL MONEY</strong></h4>
+
+                                        <ul>
+                                                <li>Dial *185# yes</li>
+                                                <li>Select option 4 (pay bill)</li>
+                                                <li>Select option 9 (others)</li>
+                                                <li>Enter the business Number(1126731)</li>
+                                                <li>Enter amount ($50)</li>
+                                                <li>Enter reference Number (Participant's Name)</li>
+                                                <li>Enter Airtel Money Pin</li>
+                                        </ul>
+                                        {{-- (All payments must be receipted) Please return the office copy of the bank slip after payment to the registration centers. --}}
+                                </p>
+
 
 
                                     <p>
@@ -345,9 +360,9 @@
                                     <p>
                                             <h4><strong>SPECIAL INSTRUCTIONS AND EVENTS:</strong></h4>
                                             <ul>
-                                                <li>On Saturday, 4th January 2020 drop the participant at Bulange Mmengo or Hana International School, Nsangi 15kms Off Masaka Road before 10.00a.m.</li>
+                                                {{-- <li>On Saturday, 4th January 2020 drop the participant at Bulange Mmengo or Hana International School, Nsangi 15kms Off Masaka Road before 10.00a.m.</li>
                                                 <li>On Saturday, 18th January 2020 pick the participant from Hana International School, Nsangi15kms Off Masaka Road after the Closing Ceremony.</li>
-                                                <li><strong>On Saturday, 25th January 2020 every parent is requested to attend the Ekisaakaate Kya Nnabagereka Evaluation/Parenting Session from 8.30 a.m. -12.30 p.m.</strong></li>
+                                                <li><strong>On Saturday, 25th January 2020 every parent is requested to attend the Ekisaakaate Kya Nnabagereka Evaluation/Parenting Session from 8.30 a.m. -12.30 p.m.</strong></li> --}}
                                                 <li>We offer Luganda classes for beginners daily from 9am-1pm at 20,000 Ugx per day. Are you interested in signing up your child
                                                        <div class="checkbox">
                                                             <label>
@@ -443,7 +458,7 @@
                 <div class="x_content">
                         <div class="row">
                             <div class="col-md-5">
-                                <button class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('p_type_').value='c'; runCheck(); ">Cash <br> Payment</button>
+                                <button class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('p_type_').value='c'; runCheck(); ">Cash/Airtel Money <br> Payment</button>
                             </div>
                             <div class="col-md-5">
                                     <button class="btn btn-default" disabled>Online <br> Payment</button>
